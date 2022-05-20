@@ -82,12 +82,9 @@ options.add_experimental_option('useAutomationExtension', False)
 browser = webdriver.Chrome(options=options, executable_path=chrome_path)
 
 
-
 browser.implicitly_wait(1.5)
 browser.get(url)
-
 time.sleep(2)
-source_html = browser.page_source
 
 
 email_xp = '//*[@id="content"]/div/div/section/div[2]/form/div[1]/div[1]/input'
@@ -128,7 +125,7 @@ tab_event_finder = browser.find_element(By.XPATH, tab_event_finder_xp).click()
 # choose month
 #
 # date_m = int(input('Select month! For example: 1 (JANUARY will be parsed) : '))
-date_m = 1
+date_m = 1 # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 date_from_xp = '//*[@id="q-datepicker_3"]'
 date_from = browser.find_element(By.XPATH, date_from_xp)
@@ -149,17 +146,97 @@ date_to_xp = '//*[@id="q-datepicker_5"]'
 date_to = browser.find_element(By.XPATH, date_to_xp)
 
 if date_m < 10:
-    date_to.send_keys(f'0{date_m}/{days}/2022')
+    date_to.send_keys(f'04/{days}/2022') # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #date_to.send_keys(f'{date_m}/{days}/2022')
 else:
-    date_to.send_keys(f'{date_m}/{days}/2022')
+    date_to.send_keys(f'04/{days}/2022') # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #date_to.send_keys(f'{date_m}/{days}/2022')
 
 time.sleep(0.5)
 date_to.send_keys(Keys.RETURN)
-time.sleep(0.5)
+time.sleep(1)
 
 
 btn_search_xp = '//*[@id="finder"]/event-find/div/div/section/div/form/fieldset/div[2]/input[1]'
 btn_search = browser.find_element(By.XPATH, btn_search_xp).click()
+
+'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[2]/a'
+'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[3]/a'
+'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[6]/a'
+'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[7]/a'
+
+'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[3]/a'
+
+# clear file...
+with open('urls.txt', 'w+', encoding='utf-8') as file:
+    file.write('')
+
+for p_ in range(2, 100):
+    pag_xp = f'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[{p_}]/a'
+    print(pag_xp)
+    if p_ > 2:
+        try:
+            pag = browser.find_element(By.XPATH, pag_xp).click()
+        except:
+            breakpoint()
+
+
+    for i in range(1, 11):
+        # print(f'TRY: {i} X-PATH')
+        # for j in range(10):  # adjust integer value for need
+        #     try:
+        #         tit_ = driver.find_element(By.XPATH, f'//*[@id="exhibitor-directory"]/div/div/div/div[2]/div[3]/div/ul/div[{i}]/div/div[2]/div/div[1]/div[1]/div[1]/a/h3')  # )).click()
+        #         break
+        #     except:
+        #         driver.execute_script("window.scrollBy(0, 20000)")
+        #     print(j)
+        #     time.sleep(1)
+
+        # time.sleep(0.5)
+
+
+        a_s = f'#finder > div > div > table > tbody > tr:nth-child({i}) > td:nth-child(1) > a'
+        a_ = browser.find_elements(By.CSS_SELECTOR, a_s)
+
+        link = [elem.get_attribute('href') for elem in a_]
+
+        print(link)
+
+        # write links to file
+        with open('urls.txt', 'a', encoding='utf-8') as file:
+            for url in link:
+                file.write(f'{url}\n')
+    print(f'\n==========================================\n')
+
+
+
+
+
+
+# browser.close()
+# browser.quit()
+breakpoint()
+
+
+
+
+
+# #***************************************************
+# #
+# source_html = browser.page_source
+# time.sleep(0.7)
+# browser.close()
+# browser.quit()
+#
+# with requests.Session() as session:
+#     # response = session.get(url=url, headers=headers)
+#     soup = BeautifulSoup(source_html, 'lxml')
+#
+# print(soup)
+# pagination = soup.find('ul', class_='pagination').text.strip()
+# print(pagination)
+# #
+# #***************************************************
 
 
 
