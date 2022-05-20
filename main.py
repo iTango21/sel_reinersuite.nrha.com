@@ -83,32 +83,41 @@ browser = webdriver.Chrome(options=options, executable_path=chrome_path)
 browser.implicitly_wait(1.5)
 browser.get(url)
 
-time.sleep(5)
+time.sleep(2)
 source_html = browser.page_source
 
 
-checkbox_xp = '//*[@id="checkbox1"]'
-start_time = time.time()
-try:
-    WebDriverWait(browser, 30).until(EC.element_to_be_clickable((By.XPATH, checkbox_xp))).click()
-except:
-    pass
-finish_time = time.time() - start_time
+# checkbox_xp = '//*[@id="checkbox1"]'
+# start_time = time.time()
+# try:
+#     WebDriverWait(browser, 30).until(EC.element_to_be_clickable((By.XPATH, checkbox_xp))).click()
+# except:
+#     pass
+# finish_time = time.time() - start_time
 
 email_xp = '//*[@id="content"]/div/div/section/div[2]/form/div[1]/div[1]/input'
 in_email = browser.find_element(By.XPATH, email_xp)
 in_email.send_keys(set_email)
+time.sleep(1.1)
 
 pass_xp = '//*[@id="content"]/div/div/section/div[2]/form/div[1]/div[2]/input'
 in_pass = browser.find_element(By.XPATH, pass_xp)
 in_pass.send_keys(set_pass)
+time.sleep(1.2)
 
+checkbox_xp = '//*[@id="content"]/div/div/section/div/form/div[2]/div/label'
+checkbox = browser.find_element(By.XPATH, checkbox_xp).click()
+time.sleep(0.7)
 
-
-
+btn_login_xp = '//*[@id="content"]/div/div/section/div/form/div[3]/div/button'
+btn_login = browser.find_element(By.XPATH, btn_login_xp).click()
 time.sleep(0.9)
 
 
-time.sleep(5)
-browser.close()
-browser.quit()
+
+breakpoint()
+
+
+# time.sleep(5)
+# browser.close()
+# browser.quit()
