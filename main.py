@@ -234,6 +234,17 @@ for url in url_list:
     browser.get(url)
     time.sleep(2)
 
+
+
+    gear_xp = '//*[@id="app"]/nav[2]/div/div[2]/ul[1]/li/a/i'
+    start_time = time.time()
+    try:
+        WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, gear_xp)))
+    except:
+        pass
+    finish_time = time.time() - start_time
+    print(f'GEAR: {finish_time}')
+
     results_xp = '//*[@id="content"]/div/div/div/div/div/section/div/div[2]/ul/li[2]/a'
     results = browser.find_element(By.XPATH, results_xp).click()
     time.sleep(0.5)
@@ -241,18 +252,17 @@ for url in url_list:
     select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
     options = [x.text for x in select_box.options]
 
+    pos_num = 1
+
     for pos in options:
         # select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
         # select_box.selectByVisibleText(pos)
         print(pos)
 
-
         select_box.select_by_visible_text(pos)
-
 
         number_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[2]'
         number = (browser.find_element(By.XPATH, number_xp).text.split(':')[-1]).strip()
-        print(number)
 
         # mm/dd/yyyy
         data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
@@ -263,48 +273,108 @@ for url in url_list:
         name = browser.find_element(By.XPATH, name_xp).text
 
         title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
+        start_time = time.time()
+        try:
+            WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
+        except:
+            pass
+        finish_time = time.time() - start_time
+        print(finish_time)
+
         title = browser.find_element(By.XPATH, title_xp).text
+        print(title)
+
+#
+        #
+        #
+        #
+        #
+        #
+        #
+        #
 
 
+        items_ = []
         for tr_ in range(1, 100):
-            tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]'
-            print(f'TR: {tr_}')
+            tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
+
             try:
                 browser.find_element(By.XPATH, tr_xp)
             except:
                 break
 
             # NEW items to file
-            items_ = []
-            tr_new = []
             # PLACING	BACK#	HORSE	RIDER	OWNER	SCORE	EARNINGS(USD)
-            xp_ = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[1]/td['
-            for h in range(1, 8):
-                elem_xp = f'{xp_}{h}]'
-                tr_new.append(browser.find_element(By.XPATH, elem_xp).text)
+            pl_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
+            ba_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[2]'
+            ho_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[3]'
+            ri_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[4]'
+            ow_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[5]'
+            sc_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[6]'
 
-            items_.append({
-                "PLACING": tr_new[0],
-                "BACK#": tr_new[1],
-                "HORSE": tr_new[2],
-                "RIDER": tr_new[3],
-                "OWNER": tr_new[4],
-                "SCORE": tr_new[5],
-                "EARNINGS(USD)": tr_new[6]}
-            )
 
-        with open(f'{data}_{number}_{title}.json', 'a', encoding='utf-8') as file:
+            gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
+            gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
+
+            green_bool = False
+
+            if gr_yo_txt == 'GREEN':
+                gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
+                items_.append(
+                    {
+                        "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                        "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                        "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                        "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                        "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                        "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                        "GREEN": browser.find_element(By.XPATH, gr_yo).text,
+                        "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                    }
+                )
+            elif gr_yo_txt == 'YOUTH':
+                gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
+                items_.append(
+                    {
+                        "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                        "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                        "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                        "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                        "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                        "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                        "YOUTH": browser.find_element(By.XPATH, gr_yo).text,
+                        "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                    }
+                )
+            else:
+                ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                items_.append(
+                    {
+                        "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                        "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                        "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                        "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                        "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                        "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                        "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                    }
+                )
+
+
+        print(items_)
+        file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
+
+
+        file_name = f'./out/{file_name_}.json'
+
+        with open(file_name, 'w+', encoding='utf-8') as file:
             json.dump(items_, file, indent=4, ensure_ascii=False)
 
+        print(f'{data}_{number}_{title}\n\n')
 
-        print(f'{data}_{number}')
-
-
-        breakpoint()
-        #select_box.selectByIndex(1)
-    # print(options)
-
-
+        pos_num += 1
 
     print('*****************************************')
 
@@ -347,3 +417,17 @@ if __name__ == '__main__':
 # time.sleep(5)
 # browser.close()
 # browser.quit()
+
+"""
+
+https://reinersuite.nrha.com/#/app/events/menu/72387
+https://reinersuite.nrha.com/#/app/events/menu/72463
+https://reinersuite.nrha.com/#/app/events/menu/72450
+https://reinersuite.nrha.com/#/app/events/menu/72479
+https://reinersuite.nrha.com/#/app/events/menu/72466
+https://reinersuite.nrha.com/#/app/events/menu/72447
+https://reinersuite.nrha.com/#/app/events/menu/72272
+https://reinersuite.nrha.com/#/app/events/menu/72481
+https://reinersuite.nrha.com/#/app/events/menu/72480
+
+"""
