@@ -1,9 +1,7 @@
 import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
@@ -23,7 +21,12 @@ import lxml
 import json
 import time
 
-# import xlsxwriter
+from datetime import datetime
+from calendar import monthrange
+
+current_year = datetime.now().year
+month = 3  # int(input())
+
 
 url = 'https://reinersuite.nrha.com/#/login'
 
@@ -87,14 +90,6 @@ time.sleep(2)
 source_html = browser.page_source
 
 
-# checkbox_xp = '//*[@id="checkbox1"]'
-# start_time = time.time()
-# try:
-#     WebDriverWait(browser, 30).until(EC.element_to_be_clickable((By.XPATH, checkbox_xp))).click()
-# except:
-#     pass
-# finish_time = time.time() - start_time
-
 email_xp = '//*[@id="content"]/div/div/section/div[2]/form/div[1]/div[1]/input'
 in_email = browser.find_element(By.XPATH, email_xp)
 in_email.send_keys(set_email)
@@ -113,9 +108,65 @@ btn_login_xp = '//*[@id="content"]/div/div/section/div/form/div[3]/div/button'
 btn_login = browser.find_element(By.XPATH, btn_login_xp).click()
 time.sleep(0.9)
 
+gear_xp = '//*[@id="app"]/nav[2]/div/div[2]/ul[1]/li/a/i'
+start_time = time.time()
+try:
+    WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, gear_xp)))
+except:
+    pass
+finish_time = time.time() - start_time
+print(finish_time)
+
+browser.implicitly_wait(1.5)
+url_new = 'https://reinersuite.nrha.com/#/app/events/my-events'
+browser.get(url_new)
+time.sleep(2)
+
+tab_event_finder_xp = '//*[@id="summary-tab"]'
+tab_event_finder = browser.find_element(By.XPATH, tab_event_finder_xp).click()
+
+# choose month
+#
+# date_m = int(input('Select month! For example: 1 (JANUARY will be parsed) : '))
+date_m = 1
+
+date_from_xp = '//*[@id="q-datepicker_3"]'
+date_from = browser.find_element(By.XPATH, date_from_xp)
+date_from.clear()
+
+if date_m < 10:
+    date_from.send_keys(f'0{date_m}/01/2022')
+else:
+    date_from.send_keys(f'{date_m}/01/2022')
+
+time.sleep(0.5)
+date_from.send_keys(Keys.RETURN)
+time.sleep(0.5)
+# ------------------------------------------------------
+days = monthrange(current_year, month)[1]
+# ------------------------------------------------------
+date_to_xp = '//*[@id="q-datepicker_5"]'
+date_to = browser.find_element(By.XPATH, date_to_xp)
+
+if date_m < 10:
+    date_to.send_keys(f'0{date_m}/{days}/2022')
+else:
+    date_to.send_keys(f'{date_m}/{days}/2022')
+
+time.sleep(0.5)
+date_to.send_keys(Keys.RETURN)
+time.sleep(0.5)
+
+
+btn_search_xp = '//*[@id="finder"]/event-find/div/div/section/div/form/fieldset/div[2]/input[1]'
+btn_search = browser.find_element(By.XPATH, btn_search_xp).click()
+
+
+
 
 
 breakpoint()
+
 
 
 # time.sleep(5)
