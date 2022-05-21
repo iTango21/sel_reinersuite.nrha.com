@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -214,6 +216,25 @@ print(finish_time)
 # # ===================================================================================================================
 
 
+def gear_time():
+    gear_xp = '//*[@id="app"]/nav[2]/div/div[2]/ul[1]/li/a/i'
+    start_time = time.time()
+    try:
+        WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, gear_xp)))
+    except:
+        pass
+    finish_time = time.time() - start_time
+    print(f'GEAR: {finish_time}')
+
+def refresh_time():
+    refresh_time_xp = '//*[@id="content"]/event-results/div/section[2]/div/div/div[2]/button'
+    start_time = time.time()
+    try:
+        WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, refresh_time_xp)))
+    except:
+        pass
+    finish_time = time.time() - start_time
+    print(f'REFRESH_time: {finish_time}')
 
 # читаю ССЫЛКИ из ранее созданного файла
 # !!! ОБРЕЗАЮ СИМВОЛ ПЕРЕНОСА СТРОКИ !!!
@@ -232,22 +253,45 @@ for url in url_list:
 
     rows_ = []
     browser.get(url)
-    time.sleep(2)
 
-
-
-    gear_xp = '//*[@id="app"]/nav[2]/div/div[2]/ul[1]/li/a/i'
-    start_time = time.time()
-    try:
-        WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, gear_xp)))
-    except:
-        pass
-    finish_time = time.time() - start_time
-    print(f'GEAR: {finish_time}')
+    #time.sleep(2)
+    gear_time()
 
     results_xp = '//*[@id="content"]/div/div/div/div/div/section/div/div[2]/ul/li[2]/a'
     results = browser.find_element(By.XPATH, results_xp).click()
+
+    refresh_time()
     time.sleep(0.5)
+    # mm/dd/yyyy
+    data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
+    data_ = browser.find_element(By.XPATH, data_xp).text
+    data = datetime.strptime(data_, '%m/%d/%Y').strftime('%Y%m%d')
+
+    name_count = 0
+    name_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[1]/a'
+    try:
+        name = browser.find_element(By.XPATH, name_xp).text
+        print('YES!!!')
+        name_count = 1
+    except:
+        pass
+
+    if name_count == 0:
+        name_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[1]'
+        name = (browser.find_element(By.XPATH, name_xp).text.split(":")[-1]).strip()
+        print(name)
+
+
+    path_name = f"./out/{data}_{name}"
+
+    # directory
+    Path(path_name).mkdir(parents=True, exist_ok=True)
+    print(f'PATH: {path_name}')
+    print('-----------------------')
+
+    # write link to file
+    with open(f'{path_name}/___url.txt', 'a', encoding='utf-8') as file:
+        file.write(f'{url}\n')
 
     select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
     options = [x.text for x in select_box.options]
@@ -264,13 +308,13 @@ for url in url_list:
         number_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[2]'
         number = (browser.find_element(By.XPATH, number_xp).text.split(':')[-1]).strip()
 
-        # mm/dd/yyyy
-        data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
-        data_ = browser.find_element(By.XPATH, data_xp).text
-        data = datetime.strptime(data_, '%m/%d/%Y').strftime('%Y%m%d')
+        # # mm/dd/yyyy
+        # data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
+        # data_ = browser.find_element(By.XPATH, data_xp).text
+        # data = datetime.strptime(data_, '%m/%d/%Y').strftime('%Y%m%d')
 
-        name_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[1]/a'
-        name = browser.find_element(By.XPATH, name_xp).text
+        # name_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[1]/a'
+        # name = browser.find_element(By.XPATH, name_xp).text
 
         title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
         start_time = time.time()
@@ -284,17 +328,14 @@ for url in url_list:
         title = browser.find_element(By.XPATH, title_xp).text
         print(title)
 
-#
-        #
-        #
-        #
-        #
-        #
-        #
-        #
-
-
         items_ = []
+        items_add = []
+
+        gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
+        gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
+
+        print(f'TEXT: {gr_yo_txt}')
+
         for tr_ in range(1, 100):
             tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
 
@@ -312,9 +353,6 @@ for url in url_list:
             ow_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[5]'
             sc_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[6]'
 
-
-            gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
-            gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
 
             green_bool = False
 
@@ -358,16 +396,31 @@ for url in url_list:
                         "RIDER": browser.find_element(By.XPATH, ri_xp).text,
                         "OWNER": browser.find_element(By.XPATH, ow_xp).text,
                         "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                        "NONE": 'NONE',
                         "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
                     }
                 )
 
-
         print(items_)
-        file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
+        file_name_ = f'{pos_num}_{title}'.replace("\\", "").replace("/", "")
+        # file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
+
+        '{path_name}/___url.txt'
+
+        file_name = f'{path_name}/{file_name_}.json'
+        #file_name = f'./out/{file_name_}.json'
+
+        # merged = []
+        # out_files = (items_, items_add)
+        #
+        # for infile in out_files:
+        #     #data = json.load(infile)
+        #     merged.extend(infile)
+        #
+        # with open('feedsImported_all_items.json', 'w', encoding="utf-8") as outfp:
+        #     json.dump(merged, outfp)
 
 
-        file_name = f'./out/{file_name_}.json'
 
         with open(file_name, 'w+', encoding='utf-8') as file:
             json.dump(items_, file, indent=4, ensure_ascii=False)
@@ -387,22 +440,22 @@ browser.quit()
 
 
 
-#***************************************************
+# #***************************************************
+# #
+# source_html = browser.page_source
+# time.sleep(0.7)
+# browser.close()
+# browser.quit()
 #
-source_html = browser.page_source
-time.sleep(0.7)
-browser.close()
-browser.quit()
-
-with requests.Session() as session:
-    # response = session.get(url=url, headers=headers)
-    soup = BeautifulSoup(source_html, 'lxml')
-
-print(soup)
-pagination = soup.find('ul', class_='pagination').text.strip()
-print(pagination)
+# with requests.Session() as session:
+#     # response = session.get(url=url, headers=headers)
+#     soup = BeautifulSoup(source_html, 'lxml')
 #
-#***************************************************
+# print(soup)
+# pagination = soup.find('ul', class_='pagination').text.strip()
+# print(pagination)
+# #
+# #***************************************************
 
 
 
