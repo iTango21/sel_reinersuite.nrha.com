@@ -117,6 +117,10 @@ time.sleep(2)
 tab_event_finder_xp = '//*[@id="summary-tab"]'
 tab_event_finder = browser.find_element(By.XPATH, tab_event_finder_xp).click()
 
+# choose year
+#
+date_y = int(input('Select year! For example: 2022 : '))
+
 # choose month
 #
 date_m = int(input('Select month! For example: 1 (JANUARY will be parsed) : '))
@@ -127,25 +131,26 @@ date_from = browser.find_element(By.XPATH, date_from_xp)
 date_from.clear()
 
 if date_m < 10:
-    date_from.send_keys(f'0{date_m}/01/2022')
+    date_from.send_keys(f'0{date_m}/01/{date_y}')
 else:
-    date_from.send_keys(f'{date_m}/01/2022')
+    date_from.send_keys(f'{date_m}/01/{date_y}')
 
 time.sleep(0.5)
 date_from.send_keys(Keys.RETURN)
 time.sleep(0.5)
 # ------------------------------------------------------
-days = monthrange(current_year, date_m)[1]
+#days = monthrange(current_year, date_m)[1]
+days = monthrange(date_y, date_m)[1]
 # ------------------------------------------------------
 date_to_xp = '//*[@id="q-datepicker_5"]'
 date_to = browser.find_element(By.XPATH, date_to_xp)
 
 if date_m < 10:
     # date_to.send_keys(f'04/{days}/2022') # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    date_to.send_keys(f'{date_m}/{days}/2022')
+    date_to.send_keys(f'{date_m}/{days}/{date_y}')
 else:
     # date_to.send_keys(f'04/{days}/2022') # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    date_to.send_keys(f'{date_m}/{days}/2022')
+    date_to.send_keys(f'{date_m}/{days}/{date_y}')
 
 time.sleep(0.5)
 date_to.send_keys(Keys.RETURN)
@@ -178,15 +183,19 @@ for p_ in range(2, 30):
         link = [elem.get_attribute('href') for elem in a_]
 
         if not link:
+            print('EMPTY...')
             break
         else:
-            print(link)
+            print(f'{lnk_p_count} --- > {link}')
+            time.sleep(0.5)
+
 
             # write links to file
             with open('urls.txt', 'a', encoding='utf-8') as file:
                 for url in link:
                     file.write(f'{url}\n')
     print(f'\n==========================================\n')
+    print(lnk_p_count)
     if lnk_p_count < 10:
         break
 #
