@@ -107,94 +107,94 @@ print(finish_time)
 # # # ===================================================================================================================
 # # # ===================================================================================================================
 # # #
-# # # # START of "collecting links"
-# # # #
-# browser.implicitly_wait(1.5)
-# url_new = 'https://reinersuite.nrha.com/#/app/events/my-events'
-# browser.get(url_new)
-# time.sleep(2)
+# # # START of "collecting links"
+# # #
+browser.implicitly_wait(1.5)
+url_new = 'https://reinersuite.nrha.com/#/app/events/my-events'
+browser.get(url_new)
+time.sleep(2)
+
+tab_event_finder_xp = '//*[@id="summary-tab"]'
+tab_event_finder = browser.find_element(By.XPATH, tab_event_finder_xp).click()
+
+# choose month
 #
-# tab_event_finder_xp = '//*[@id="summary-tab"]'
-# tab_event_finder = browser.find_element(By.XPATH, tab_event_finder_xp).click()
+date_m = int(input('Select month! For example: 1 (JANUARY will be parsed) : '))
+# date_m = 1 # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+date_from_xp = '//*[@id="q-datepicker_3"]'
+date_from = browser.find_element(By.XPATH, date_from_xp)
+date_from.clear()
+
+if date_m < 10:
+    date_from.send_keys(f'0{date_m}/01/2022')
+else:
+    date_from.send_keys(f'{date_m}/01/2022')
+
+time.sleep(0.5)
+date_from.send_keys(Keys.RETURN)
+time.sleep(0.5)
+# ------------------------------------------------------
+days = monthrange(current_year, date_m)[1]
+# ------------------------------------------------------
+date_to_xp = '//*[@id="q-datepicker_5"]'
+date_to = browser.find_element(By.XPATH, date_to_xp)
+
+if date_m < 10:
+    # date_to.send_keys(f'04/{days}/2022') # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    date_to.send_keys(f'{date_m}/{days}/2022')
+else:
+    # date_to.send_keys(f'04/{days}/2022') # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    date_to.send_keys(f'{date_m}/{days}/2022')
+
+time.sleep(0.5)
+date_to.send_keys(Keys.RETURN)
+time.sleep(1)
+
+btn_search_xp = '//*[@id="finder"]/event-find/div/div/section/div/form/fieldset/div[2]/input[1]'
+btn_search = browser.find_element(By.XPATH, btn_search_xp).click()
+
+# clear file...
+with open('urls.txt', 'w+', encoding='utf-8') as file:
+    file.write('')
+
+for p_ in range(2, 30):
+    pag_xp = f'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[{p_}]/a'
+    print(pag_xp)
+    if p_ > 2:
+        try:
+            pag = browser.find_element(By.XPATH, pag_xp).click()
+        except:
+            pass
+
+    lnk_p_count = 0
+    for i in range(1, 11):
+
+        lnk_p_count += 1
+
+        a_s = f'#finder > div > div > table > tbody > tr:nth-child({i}) > td:nth-child(1) > a'
+        a_ = browser.find_elements(By.CSS_SELECTOR, a_s)
+
+        link = [elem.get_attribute('href') for elem in a_]
+
+        if not link:
+            break
+        else:
+            print(link)
+
+            # write links to file
+            with open('urls.txt', 'a', encoding='utf-8') as file:
+                for url in link:
+                    file.write(f'{url}\n')
+    print(f'\n==========================================\n')
+    if lnk_p_count < 10:
+        break
 #
-# # choose month
-# #
-# date_m = int(input('Select month! For example: 1 (JANUARY will be parsed) : '))
-# # date_m = 1 # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# END of "collecting links"
 #
-# date_from_xp = '//*[@id="q-datepicker_3"]'
-# date_from = browser.find_element(By.XPATH, date_from_xp)
-# date_from.clear()
-#
-# if date_m < 10:
-#     date_from.send_keys(f'0{date_m}/01/2022')
-# else:
-#     date_from.send_keys(f'{date_m}/01/2022')
-#
-# time.sleep(0.5)
-# date_from.send_keys(Keys.RETURN)
-# time.sleep(0.5)
-# # ------------------------------------------------------
-# days = monthrange(current_year, date_m)[1]
-# # ------------------------------------------------------
-# date_to_xp = '//*[@id="q-datepicker_5"]'
-# date_to = browser.find_element(By.XPATH, date_to_xp)
-#
-# if date_m < 10:
-#     # date_to.send_keys(f'04/{days}/2022') # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#     date_to.send_keys(f'{date_m}/{days}/2022')
-# else:
-#     # date_to.send_keys(f'04/{days}/2022') # TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#     date_to.send_keys(f'{date_m}/{days}/2022')
-#
-# time.sleep(0.5)
-# date_to.send_keys(Keys.RETURN)
-# time.sleep(1)
-#
-# btn_search_xp = '//*[@id="finder"]/event-find/div/div/section/div/form/fieldset/div[2]/input[1]'
-# btn_search = browser.find_element(By.XPATH, btn_search_xp).click()
-#
-# # clear file...
-# with open('urls.txt', 'w+', encoding='utf-8') as file:
-#     file.write('')
-#
-# for p_ in range(2, 30):
-#     pag_xp = f'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[{p_}]/a'
-#     print(pag_xp)
-#     if p_ > 2:
-#         try:
-#             pag = browser.find_element(By.XPATH, pag_xp).click()
-#         except:
-#             pass
-#
-#     lnk_p_count = 0
-#     for i in range(1, 11):
-#
-#         lnk_p_count += 1
-#
-#         a_s = f'#finder > div > div > table > tbody > tr:nth-child({i}) > td:nth-child(1) > a'
-#         a_ = browser.find_elements(By.CSS_SELECTOR, a_s)
-#
-#         link = [elem.get_attribute('href') for elem in a_]
-#
-#         if not link:
-#             break
-#         else:
-#             print(link)
-#
-#             # write links to file
-#             with open('urls.txt', 'a', encoding='utf-8') as file:
-#                 for url in link:
-#                     file.write(f'{url}\n')
-#     print(f'\n==========================================\n')
-#     if lnk_p_count < 10:
-#         break
-# #
-# # END of "collecting links"
-# #
-# # ===================================================================================================================
-# # ===================================================================================================================
-# # ===================================================================================================================
+# ===================================================================================================================
+# ===================================================================================================================
+# ===================================================================================================================
 
 
 # breakpoint()
