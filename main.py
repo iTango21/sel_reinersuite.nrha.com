@@ -28,7 +28,7 @@ import time
 from datetime import datetime
 from calendar import monthrange
 current_year = datetime.now().year
-
+#month = 3
 
 
 url = 'https://reinersuite.nrha.com/#/login'
@@ -49,29 +49,8 @@ print('start...')
 
 # 1
 #
-# options = webdriver.FirefoxOptions()
-# options.set_preference("general.useragent.override", f"{ua}")
-# options.set_preference("dom.webnotifications.enabled", False);
-#
-# s = Service('geckodriver.exe')
-#
-# driver = webdriver.Firefox(service=s, options=options)
 
-
-# #HERE IT FINDS THE PATH
-# if getattr(sys, 'frozen', False):
-#     application_path = os.path.dirname(sys.executable)
-# else:
-#     try:
-#         app_full_path = os.path.realpath(__file__)
-#         application_path = os.path.dirname(app_full_path)
-#     except NameError:
-#         application_path = os.getcwd()
-#
-# #Here we create the variable that is going to be used to all the functions for the path
-# path = os.path.join(application_path)
-
-chrome_path = ("./chromedriver.exe")
+chrome_path = "./chromedriver.exe"
 
 options = webdriver.ChromeOptions()
 options.headless = False
@@ -84,13 +63,12 @@ options.add_experimental_option("excludeSwitches", ["enable-logging"])
 options.add_experimental_option('useAutomationExtension', False)
 browser = webdriver.Chrome(options=options, executable_path=chrome_path)
 
-
-# # ===================================================================================================================
-# # ===================================================================================================================
-# # ===================================================================================================================
-# #
-# # START of "collecting links"
-# #
+# # # ===================================================================================================================
+# # # ===================================================================================================================
+# # # ===================================================================================================================
+# # #
+# # # START of "login"
+# # #
 browser.implicitly_wait(1.5)
 browser.get(url)
 time.sleep(2)
@@ -122,7 +100,15 @@ except:
     pass
 finish_time = time.time() - start_time
 print(finish_time)
-
+# # #
+# # # END of "login"
+# # #
+# # # ===================================================================================================================
+# # # ===================================================================================================================
+# # # ===================================================================================================================
+# # #
+# # # # START of "collecting links"
+# # # #
 # browser.implicitly_wait(1.5)
 # url_new = 'https://reinersuite.nrha.com/#/app/events/my-events'
 # browser.get(url_new)
@@ -149,7 +135,7 @@ print(finish_time)
 # date_from.send_keys(Keys.RETURN)
 # time.sleep(0.5)
 # # ------------------------------------------------------
-# days = monthrange(current_year, month)[1]
+# days = monthrange(current_year, date_m)[1]
 # # ------------------------------------------------------
 # date_to_xp = '//*[@id="q-datepicker_5"]'
 # date_to = browser.find_element(By.XPATH, date_to_xp)
@@ -172,48 +158,46 @@ print(finish_time)
 # with open('urls.txt', 'w+', encoding='utf-8') as file:
 #     file.write('')
 #
-# for p_ in range(2, 100):
+# for p_ in range(2, 30):
 #     pag_xp = f'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[{p_}]/a'
 #     print(pag_xp)
 #     if p_ > 2:
 #         try:
 #             pag = browser.find_element(By.XPATH, pag_xp).click()
 #         except:
-#             breakpoint()
+#             pass
 #
-#
+#     lnk_p_count = 0
 #     for i in range(1, 11):
-#         # print(f'TRY: {i} X-PATH')
-#         # for j in range(10):  # adjust integer value for need
-#         #     try:
-#         #         tit_ = driver.find_element(By.XPATH, f'//*[@id="exhibitor-directory"]/div/div/div/div[2]/div[3]/div/ul/div[{i}]/div/div[2]/div/div[1]/div[1]/div[1]/a/h3')  # )).click()
-#         #         break
-#         #     except:
-#         #         driver.execute_script("window.scrollBy(0, 20000)")
-#         #     print(j)
-#         #     time.sleep(1)
 #
-#         # time.sleep(0.5)
-#
+#         lnk_p_count += 1
 #
 #         a_s = f'#finder > div > div > table > tbody > tr:nth-child({i}) > td:nth-child(1) > a'
 #         a_ = browser.find_elements(By.CSS_SELECTOR, a_s)
 #
 #         link = [elem.get_attribute('href') for elem in a_]
 #
-#         print(link)
+#         if not link:
+#             break
+#         else:
+#             print(link)
 #
-#         # write links to file
-#         with open('urls.txt', 'a', encoding='utf-8') as file:
-#             for url in link:
-#                 file.write(f'{url}\n')
+#             # write links to file
+#             with open('urls.txt', 'a', encoding='utf-8') as file:
+#                 for url in link:
+#                     file.write(f'{url}\n')
 #     print(f'\n==========================================\n')
+#     if lnk_p_count < 10:
+#         break
 # #
 # # END of "collecting links"
 # #
 # # ===================================================================================================================
 # # ===================================================================================================================
 # # ===================================================================================================================
+
+
+# breakpoint()
 
 
 def gear_time():
@@ -226,210 +210,227 @@ def gear_time():
     finish_time = time.time() - start_time
     print(f'GEAR: {finish_time}')
 
-def refresh_time():
-    refresh_time_xp = '//*[@id="content"]/event-results/div/section[2]/div/div/div[2]/button'
+def results_time():
+    results_xp = '//*[@id="content"]/div/div/div/div/div/section/div/div[2]/ul/li[2]/a'
     start_time = time.time()
     try:
-        WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, refresh_time_xp)))
+        WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, results_xp)))
     except:
         pass
     finish_time = time.time() - start_time
-    print(f'REFRESH_time: {finish_time}')
+    print(f'RESULTS_time: {finish_time}')
 
-# читаю ССЫЛКИ из ранее созданного файла
-# !!! ОБРЕЗАЮ СИМВОЛ ПЕРЕНОСА СТРОКИ !!!
+
+
+def refrash_time():
+    refresh_time_xp = '//*[@id="content"]/event-results/div/section[2]/div/div/div[2]/button'
+    start_time = time.time()
+    try:
+        WebDriverWait(browser, 20).until(EC.text_to_be_present_in_element(By.XPATH, refresh_time_xp))
+    except:
+        pass
+    finish_time = time.time() - start_time
+    print(f'DATA_TO_DAY_time: {finish_time}')
+
+
+def data_today_time():
+    # refresh_time_xp = '//*[@id="content"]/event-results/div/section[2]/div/div/div[2]/button'
+    data_today_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[1]/div/span'
+    start_time = time.time()
+    try:
+        WebDriverWait(browser, 20).until(EC.text_to_be_present_in_element(By.XPATH, data_today_xp)) # WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, data_today_xp)))
+    except:
+        pass
+    finish_time = time.time() - start_time
+    print(f'DATA_TO_DAY_time: {finish_time}')
+
+def links_with_no_results(url):
+    with open('links_with_no_results.txt', 'a', encoding='utf-8') as file:
+                file.write(f'{url}\n')
+
+
+
 with open('urls.txt') as file:
     url_list = [line.strip() for line in file.readlines()]
 
-# СЧЁТЧИК количества ЛОТОВ(ссылок)
 url_count = len(url_list)
 print(url_count)
 
 browser.implicitly_wait(1.5)
 
-
-
 for url in url_list:
 
     rows_ = []
     browser.get(url)
+    time.sleep(0.3)
+    browser.get(url)
 
-    #time.sleep(2)
-    gear_time()
 
+
+    #time.sleep(3)
+    results_time()
+
+    # find "Results"
+    res_bool = False
     results_xp = '//*[@id="content"]/div/div/div/div/div/section/div/div[2]/ul/li[2]/a'
-    results = browser.find_element(By.XPATH, results_xp).click()
-
-    refresh_time()
-    time.sleep(0.5)
-    # mm/dd/yyyy
-    data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
-    data_ = browser.find_element(By.XPATH, data_xp).text
-    data = datetime.strptime(data_, '%m/%d/%Y').strftime('%Y%m%d')
-
-    name_count = 0
-    name_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[1]/a'
     try:
-        name = browser.find_element(By.XPATH, name_xp).text
-        print('YES!!!')
-        name_count = 1
+        results = browser.find_element(By.XPATH, results_xp).click()
+        res_bool = True
     except:
-        pass
+        links_with_no_results(url)
 
-    if name_count == 0:
-        name_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[1]'
-        name = (browser.find_element(By.XPATH, name_xp).text.split(":")[-1]).strip()
-        print(name)
+    if res_bool:
+        refrash_time()
+        time.sleep(0.5)
+        # mm/dd/yyyy
+        data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
+        data_ = browser.find_element(By.XPATH, data_xp).text
+        data = datetime.strptime(data_, '%m/%d/%Y').strftime('%Y%m%d')
 
-
-    path_name = f"./out/{data}_{name}"
-
-    # directory
-    Path(path_name).mkdir(parents=True, exist_ok=True)
-    print(f'PATH: {path_name}')
-    print('-----------------------')
-
-    # write link to file
-    with open(f'{path_name}/___url.txt', 'a', encoding='utf-8') as file:
-        file.write(f'{url}\n')
-
-    select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
-    options = [x.text for x in select_box.options]
-
-    pos_num = 1
-
-    for pos in options:
-        # select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
-        # select_box.selectByVisibleText(pos)
-        print(pos)
-
-        select_box.select_by_visible_text(pos)
-
-        number_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[2]'
-        number = (browser.find_element(By.XPATH, number_xp).text.split(':')[-1]).strip()
-
-        # # mm/dd/yyyy
-        # data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
-        # data_ = browser.find_element(By.XPATH, data_xp).text
-        # data = datetime.strptime(data_, '%m/%d/%Y').strftime('%Y%m%d')
-
-        # name_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[1]/a'
-        # name = browser.find_element(By.XPATH, name_xp).text
-
-        title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
-        start_time = time.time()
+        name_count = 0
+        name_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[1]/a'
         try:
-            WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
+            name = browser.find_element(By.XPATH, name_xp).text
+            print('YES!!!')
+            name_count = 1
         except:
             pass
-        finish_time = time.time() - start_time
-        print(finish_time)
 
-        title = browser.find_element(By.XPATH, title_xp).text
-        print(title)
+        if name_count == 0:
+            name_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[1]'
+            name = (browser.find_element(By.XPATH, name_xp).text.split(":")[-1]).strip()
+            print(name)
 
-        items_ = []
-        items_add = []
+        # path_name = f"./out/{data}_{name}"
+        #
+        # # directory
+        # Path(path_name).mkdir(parents=True, exist_ok=True)
+        # print(f'PATH: {path_name}')
+        # print('-----------------------')
+        #
+        # # write link to file
+        # with open(f'{path_name}/___url.txt', 'a', encoding='utf-8') as file:
+        #     file.write(f'{url}\n')
 
-        gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
-        gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
+        select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
+        options = [x.text for x in select_box.options]
 
-        print(f'TEXT: {gr_yo_txt}')
+        pos_num = 1
 
-        for tr_ in range(1, 100):
-            tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
+        for pos in options:
+            # select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
+            # select_box.selectByVisibleText(pos)
+            print(pos)
 
+            select_box.select_by_visible_text(pos)
+
+            data_today_time()
+
+            number_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[2]'
+            number = (browser.find_element(By.XPATH, number_xp).text.split(':')[-1]).strip()
+
+            title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
+            start_time = time.time()
             try:
-                browser.find_element(By.XPATH, tr_xp)
+                WebDriverWait(browser, 15).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
             except:
-                break
+                pass
+            finish_time = time.time() - start_time
+            print(finish_time)
 
-            # NEW items to file
-            # PLACING	BACK#	HORSE	RIDER	OWNER	SCORE	EARNINGS(USD)
-            pl_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
-            ba_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[2]'
-            ho_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[3]'
-            ri_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[4]'
-            ow_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[5]'
-            sc_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[6]'
+            title = browser.find_element(By.XPATH, title_xp).text
+            print(title)
 
+            items_ = []
+            items_add = []
 
-            green_bool = False
+            gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
+            gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
 
-            if gr_yo_txt == 'GREEN':
-                gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
-                ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
-                items_.append(
-                    {
-                        "PLACING": browser.find_element(By.XPATH, pl_xp).text,
-                        "BACK#": browser.find_element(By.XPATH, ba_xp).text,
-                        "HORSE": browser.find_element(By.XPATH, ho_xp).text,
-                        "RIDER": browser.find_element(By.XPATH, ri_xp).text,
-                        "OWNER": browser.find_element(By.XPATH, ow_xp).text,
-                        "SCORE": browser.find_element(By.XPATH, sc_xp).text,
-                        "GREEN": browser.find_element(By.XPATH, gr_yo).text,
-                        "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
-                    }
-                )
-            elif gr_yo_txt == 'YOUTH':
-                gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
-                ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
-                items_.append(
-                    {
-                        "PLACING": browser.find_element(By.XPATH, pl_xp).text,
-                        "BACK#": browser.find_element(By.XPATH, ba_xp).text,
-                        "HORSE": browser.find_element(By.XPATH, ho_xp).text,
-                        "RIDER": browser.find_element(By.XPATH, ri_xp).text,
-                        "OWNER": browser.find_element(By.XPATH, ow_xp).text,
-                        "SCORE": browser.find_element(By.XPATH, sc_xp).text,
-                        "YOUTH": browser.find_element(By.XPATH, gr_yo).text,
-                        "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
-                    }
-                )
-            else:
-                ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
-                items_.append(
-                    {
-                        "PLACING": browser.find_element(By.XPATH, pl_xp).text,
-                        "BACK#": browser.find_element(By.XPATH, ba_xp).text,
-                        "HORSE": browser.find_element(By.XPATH, ho_xp).text,
-                        "RIDER": browser.find_element(By.XPATH, ri_xp).text,
-                        "OWNER": browser.find_element(By.XPATH, ow_xp).text,
-                        "SCORE": browser.find_element(By.XPATH, sc_xp).text,
-                        "NONE": 'NONE',
-                        "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
-                    }
-                )
+            print(f'TEXT: {gr_yo_txt}')
 
-        print(items_)
-        file_name_ = f'{pos_num}_{title}'.replace("\\", "").replace("/", "")
-        # file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
+            for tr_ in range(1, 100):
+                tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
 
-        '{path_name}/___url.txt'
+                try:
+                    browser.find_element(By.XPATH, tr_xp)
+                except:
+                    break
 
-        file_name = f'{path_name}/{file_name_}.json'
-        #file_name = f'./out/{file_name_}.json'
-
-        # merged = []
-        # out_files = (items_, items_add)
-        #
-        # for infile in out_files:
-        #     #data = json.load(infile)
-        #     merged.extend(infile)
-        #
-        # with open('feedsImported_all_items.json', 'w', encoding="utf-8") as outfp:
-        #     json.dump(merged, outfp)
+                # NEW items to file
+                # PLACING	BACK#	HORSE	RIDER	OWNER	SCORE	EARNINGS(USD)
+                pl_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
+                ba_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[2]'
+                ho_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[3]'
+                ri_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[4]'
+                ow_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[5]'
+                sc_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[6]'
 
 
+                green_bool = False
 
-        with open(file_name, 'w+', encoding='utf-8') as file:
-            json.dump(items_, file, indent=4, ensure_ascii=False)
+                if gr_yo_txt == 'GREEN':
+                    gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                    ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
+                    items_.append(
+                        {
+                            "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                            "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                            "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                            "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                            "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                            "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                            "GREEN": browser.find_element(By.XPATH, gr_yo).text,
+                            "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                        }
+                    )
+                elif gr_yo_txt == 'YOUTH':
+                    gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                    ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
+                    items_.append(
+                        {
+                            "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                            "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                            "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                            "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                            "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                            "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                            "YOUTH": browser.find_element(By.XPATH, gr_yo).text,
+                            "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                        }
+                    )
+                else:
+                    ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                    items_.append(
+                        {
+                            "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                            "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                            "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                            "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                            "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                            "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                            "NONE": 'NONE',
+                            "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                        }
+                    )
 
-        print(f'{data}_{number}_{title}\n\n')
+            print(items_)
+            #file_name_ = f'{pos_num}_{title}'.replace("\\", "").replace("/", "")
+            file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
 
-        pos_num += 1
+            '{path_name}/___url.txt'
 
-    print('*****************************************')
+            #file_name = f'{path_name}/{file_name_}.json'
+            file_name = f'./out/{file_name_}.json'
+
+            with open(file_name, 'w+', encoding='utf-8') as file:
+                json.dump(items_, file, indent=4, ensure_ascii=False)
+
+            print(f'{data}_{number}_{title}\n\n')
+
+            pos_num += 1
+
+        print('*****************************************')
 
 
 browser.close()
@@ -482,5 +483,130 @@ https://reinersuite.nrha.com/#/app/events/menu/72447
 https://reinersuite.nrha.com/#/app/events/menu/72272
 https://reinersuite.nrha.com/#/app/events/menu/72481
 https://reinersuite.nrha.com/#/app/events/menu/72480
+
+https://reinersuite.nrha.com/#/app/events/menu/72468
+https://reinersuite.nrha.com/#/app/events/menu/72483
+https://reinersuite.nrha.com/#/app/events/menu/72473
+https://reinersuite.nrha.com/#/app/events/menu/72459
+https://reinersuite.nrha.com/#/app/events/menu/72493
+https://reinersuite.nrha.com/#/app/events/menu/72490
+https://reinersuite.nrha.com/#/app/events/menu/72488
+https://reinersuite.nrha.com/#/app/events/menu/72497
+https://reinersuite.nrha.com/#/app/events/menu/72464
+https://reinersuite.nrha.com/#/app/events/menu/72462
+https://reinersuite.nrha.com/#/app/events/menu/72460
+https://reinersuite.nrha.com/#/app/events/menu/72458
+https://reinersuite.nrha.com/#/app/events/menu/72501
+
+https://reinersuite.nrha.com/#/app/events/menu/72456
+https://reinersuite.nrha.com/#/app/events/menu/72467
+https://reinersuite.nrha.com/#/app/events/menu/72471
+https://reinersuite.nrha.com/#/app/events/menu/72472
+https://reinersuite.nrha.com/#/app/events/menu/72461
+https://reinersuite.nrha.com/#/app/events/menu/72474
+https://reinersuite.nrha.com/#/app/events/menu/72517
+https://reinersuite.nrha.com/#/app/events/menu/72526
+https://reinersuite.nrha.com/#/app/events/menu/72482
+https://reinersuite.nrha.com/#/app/events/menu/72486
+https://reinersuite.nrha.com/#/app/events/menu/72512
+https://reinersuite.nrha.com/#/app/events/menu/72477
+https://reinersuite.nrha.com/#/app/events/menu/72485
+https://reinersuite.nrha.com/#/app/events/menu/72571
+https://reinersuite.nrha.com/#/app/events/menu/72487
+https://reinersuite.nrha.com/#/app/events/menu/72465
+https://reinersuite.nrha.com/#/app/events/menu/72504
+https://reinersuite.nrha.com/#/app/events/menu/72590
+https://reinersuite.nrha.com/#/app/events/menu/72503
+https://reinersuite.nrha.com/#/app/events/menu/72491
+https://reinersuite.nrha.com/#/app/events/menu/72489
+https://reinersuite.nrha.com/#/app/events/menu/72470
+https://reinersuite.nrha.com/#/app/events/menu/72516
+https://reinersuite.nrha.com/#/app/events/menu/72559
+https://reinersuite.nrha.com/#/app/events/menu/71933 !!! No "Results"
+https://reinersuite.nrha.com/#/app/events/menu/72448
+https://reinersuite.nrha.com/#/app/events/menu/72475
+https://reinersuite.nrha.com/#/app/events/menu/72494
+
+https://reinersuite.nrha.com/#/app/events/menu/71933
+https://reinersuite.nrha.com/#/app/events/menu/72448
+https://reinersuite.nrha.com/#/app/events/menu/72475
+https://reinersuite.nrha.com/#/app/events/menu/72494
+https://reinersuite.nrha.com/#/app/events/menu/72514
+https://reinersuite.nrha.com/#/app/events/menu/72500
+https://reinersuite.nrha.com/#/app/events/menu/72554
+https://reinersuite.nrha.com/#/app/events/menu/72535
+https://reinersuite.nrha.com/#/app/events/menu/72542
+https://reinersuite.nrha.com/#/app/events/menu/72513
+https://reinersuite.nrha.com/#/app/events/menu/72509
+https://reinersuite.nrha.com/#/app/events/menu/72593
+https://reinersuite.nrha.com/#/app/events/menu/72531
+https://reinersuite.nrha.com/#/app/events/menu/72451
+https://reinersuite.nrha.com/#/app/events/menu/72525
+https://reinersuite.nrha.com/#/app/events/menu/72511
+https://reinersuite.nrha.com/#/app/events/menu/72495
+https://reinersuite.nrha.com/#/app/events/menu/72587
+https://reinersuite.nrha.com/#/app/events/menu/72521
+https://reinersuite.nrha.com/#/app/events/menu/72519
+https://reinersuite.nrha.com/#/app/events/menu/72484
+https://reinersuite.nrha.com/#/app/events/menu/72564
+https://reinersuite.nrha.com/#/app/events/menu/72518
+https://reinersuite.nrha.com/#/app/events/menu/72523
+https://reinersuite.nrha.com/#/app/events/menu/72496
+https://reinersuite.nrha.com/#/app/events/menu/72602
+https://reinersuite.nrha.com/#/app/events/menu/72570
+https://reinersuite.nrha.com/#/app/events/menu/72522
+https://reinersuite.nrha.com/#/app/events/menu/72502
+https://reinersuite.nrha.com/#/app/events/menu/72492
+https://reinersuite.nrha.com/#/app/events/menu/72537
+https://reinersuite.nrha.com/#/app/events/menu/72580
+https://reinersuite.nrha.com/#/app/events/menu/72569
+https://reinersuite.nrha.com/#/app/events/menu/72577
+https://reinersuite.nrha.com/#/app/events/menu/72568
+https://reinersuite.nrha.com/#/app/events/menu/72567
+https://reinersuite.nrha.com/#/app/events/menu/72608
+https://reinersuite.nrha.com/#/app/events/menu/72549
+
+https://reinersuite.nrha.com/#/app/events/menu/72537
+https://reinersuite.nrha.com/#/app/events/menu/72580
+https://reinersuite.nrha.com/#/app/events/menu/72569
+https://reinersuite.nrha.com/#/app/events/menu/72577
+https://reinersuite.nrha.com/#/app/events/menu/72568
+https://reinersuite.nrha.com/#/app/events/menu/72567
+https://reinersuite.nrha.com/#/app/events/menu/72544
+https://reinersuite.nrha.com/#/app/events/menu/72155
+https://reinersuite.nrha.com/#/app/events/menu/72625
+https://reinersuite.nrha.com/#/app/events/menu/72624
+https://reinersuite.nrha.com/#/app/events/menu/72589
+https://reinersuite.nrha.com/#/app/events/menu/72588
+https://reinersuite.nrha.com/#/app/events/menu/72586
+https://reinersuite.nrha.com/#/app/events/menu/72583
+https://reinersuite.nrha.com/#/app/events/menu/72545
+https://reinersuite.nrha.com/#/app/events/menu/72524
+https://reinersuite.nrha.com/#/app/events/menu/72538
+https://reinersuite.nrha.com/#/app/events/menu/72499
+https://reinersuite.nrha.com/#/app/events/menu/72515
+https://reinersuite.nrha.com/#/app/events/menu/72510
+https://reinersuite.nrha.com/#/app/events/menu/72498
+https://reinersuite.nrha.com/#/app/events/menu/72626
+https://reinersuite.nrha.com/#/app/events/menu/72551
+https://reinersuite.nrha.com/#/app/events/menu/72520
+https://reinersuite.nrha.com/#/app/events/menu/72619
+https://reinersuite.nrha.com/#/app/events/menu/72596
+https://reinersuite.nrha.com/#/app/events/menu/72560
+https://reinersuite.nrha.com/#/app/events/menu/72636
+https://reinersuite.nrha.com/#/app/events/menu/72536
+https://reinersuite.nrha.com/#/app/events/menu/72594
+https://reinersuite.nrha.com/#/app/events/menu/72530
+https://reinersuite.nrha.com/#/app/events/menu/72584
+https://reinersuite.nrha.com/#/app/events/menu/72566
+https://reinersuite.nrha.com/#/app/events/menu/72550
+https://reinersuite.nrha.com/#/app/events/menu/72599
+https://reinersuite.nrha.com/#/app/events/menu/72607
+https://reinersuite.nrha.com/#/app/events/menu/72601
+https://reinersuite.nrha.com/#/app/events/menu/72565
+https://reinersuite.nrha.com/#/app/events/menu/72534
+https://reinersuite.nrha.com/#/app/events/menu/72555
+https://reinersuite.nrha.com/#/app/events/menu/72615
+https://reinersuite.nrha.com/#/app/events/menu/72613
 
 """
