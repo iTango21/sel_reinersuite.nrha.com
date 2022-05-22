@@ -184,20 +184,20 @@ for p_ in range(2, 30):
 
         if not link:
             print('EMPTY...')
+            lnk_p_count = 555
             break
         else:
             print(f'{lnk_p_count} --- > {link}')
-            time.sleep(0.5)
-
-
+            time.sleep(0.3)
             # write links to file
             with open('urls.txt', 'a', encoding='utf-8') as file:
                 for url in link:
                     file.write(f'{url}\n')
-    print(f'\n==========================================\n')
-    print(lnk_p_count)
-    if lnk_p_count < 10:
+    if lnk_p_count == 555:
         break
+    print(f'\n==========================================\n')
+
+
 #
 # END of "collecting links"
 #
