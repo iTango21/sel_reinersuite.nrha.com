@@ -19,7 +19,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         # self.spinbox = tk.Spinbox(self, from_=1, to=12)
-        self.scale_y = tk.Scale(self, from_=2015, to=2022,
+        self.scale_y = tk.Scale(self, from_=1975, to=2022,
                                 orient=tk.HORIZONTAL)
 
         self.scale_m = tk.Scale(self, from_=1, to=12,
