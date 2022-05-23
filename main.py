@@ -164,6 +164,7 @@ def _my(date_y, date_m):
     for p_ in range(2, 30):
         pag_xp = f'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[{p_}]/a'
         print(pag_xp)
+        time.sleep(0.3)
         if p_ > 2:
             try:
                 pag = browser.find_element(By.XPATH, pag_xp).click()
