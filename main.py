@@ -219,7 +219,7 @@ def _my(date_y, date_m):
         results_xp = '//*[@id="content"]/div/div/div/div/div/section/div/div[2]/ul/li[2]/a'
         start_time = time.time()
         try:
-            WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, results_xp)))
+            WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, results_xp)))
         except:
             pass
         finish_time = time.time() - start_time
@@ -233,7 +233,10 @@ def _my(date_y, date_m):
         except:
             pass
         finish_time = time.time() - start_time
-        print(f'DATA_TO_DAY_time: {finish_time}')
+        print(f'REFRASH_time: {finish_time}')
+
+
+        # '//*[@id="content"]/event-results/div/section[2]/div/div/div[1]/select'
 
     def data_today_time():
         # refresh_time_xp = '//*[@id="content"]/event-results/div/section[2]/div/div/div[2]/button'
@@ -261,7 +264,7 @@ def _my(date_y, date_m):
     for url in url_list:
         ### !!!!!!!!!!!!!!!!!!!!!
         browser.get(url)
-        time.sleep(0.3)
+        time.sleep(0.5)
         browser.get(url)
 
         # time.sleep(3)
@@ -278,7 +281,7 @@ def _my(date_y, date_m):
 
         if res_bool:
             refrash_time()
-            time.sleep(0.5)
+            time.sleep(1)
             # mm/dd/yyyy
             data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
             data_ = browser.find_element(By.XPATH, data_xp).text
