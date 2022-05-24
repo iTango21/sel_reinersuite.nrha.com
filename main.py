@@ -10,6 +10,7 @@ import tkinter as tk
 from fake_useragent import UserAgent
 from datetime import datetime
 from calendar import monthrange
+from pathlib import Path
 
 ua = UserAgent()
 ua = ua.random
@@ -19,10 +20,10 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         # self.spinbox = tk.Spinbox(self, from_=1, to=12)
-        self.scale_y = tk.Scale(self, from_=1975, to=2022,
+        self.scale_y = tk.Scale(self, from_=2021, to=2022,
                                 orient=tk.HORIZONTAL)
 
-        self.scale_m = tk.Scale(self, from_=1, to=12,
+        self.scale_m = tk.Scale(self, from_=6, to=12,
                                 orient=tk.HORIZONTAL)
 
         self.btn = tk.Button(self, text="Parse!..",
@@ -117,87 +118,87 @@ def _my(date_y, date_m):
     # # # ===========================================================================================================
     # # # ===========================================================================================================
 
-    # # # START of "Collecting links..."
-    # # #
-    browser.implicitly_wait(1.5)
-    url_new = 'https://reinersuite.nrha.com/#/app/events/my-events'
-    browser.get(url_new)
-    time.sleep(2)
-
-    tab_event_finder_xp = '//*[@id="summary-tab"]'
-    tab_event_finder = browser.find_element(By.XPATH, tab_event_finder_xp).click()
-
-    date_from_xp = '//*[@id="q-datepicker_3"]'
-    date_from = browser.find_element(By.XPATH, date_from_xp)
-    date_from.clear()
-
-    if date_m < 10:
-        date_from.send_keys(f'0{date_m}/01/{date_y}')
-    else:
-        date_from.send_keys(f'{date_m}/01/{date_y}')
-
-    time.sleep(0.5)
-    date_from.send_keys(Keys.RETURN)
-    time.sleep(0.5)
-    # ------------------------------------------------------
-    days = monthrange(date_y, date_m)[1]
-    # ------------------------------------------------------
-    date_to_xp = '//*[@id="q-datepicker_5"]'
-    date_to = browser.find_element(By.XPATH, date_to_xp)
-
-    if date_m < 10:
-        date_to.send_keys(f'{date_m}/{days}/{date_y}')
-    else:
-        date_to.send_keys(f'{date_m}/{days}/{date_y}')
-
-    time.sleep(0.5)
-    date_to.send_keys(Keys.RETURN)
-    time.sleep(1)
-
-    btn_search_xp = '//*[@id="finder"]/event-find/div/div/section/div/form/fieldset/div[2]/input[1]'
-    btn_search = browser.find_element(By.XPATH, btn_search_xp).click()
-
-    # clear file...
-    with open('urls.txt', 'w+', encoding='utf-8') as file:
-        file.write('')
-
-    for p_ in range(2, 30):
-        pag_xp = f'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[{p_}]/a'
-        print(pag_xp)
-        time.sleep(0.3)
-        if p_ > 2:
-            try:
-                pag = browser.find_element(By.XPATH, pag_xp).click()
-            except:
-                pass
-
-        lnk_p_count = 0
-        for i in range(1, 11):
-
-            lnk_p_count += 1
-
-            a_s = f'#finder > div > div > table > tbody > tr:nth-child({i}) > td:nth-child(1) > a'
-            a_ = browser.find_elements(By.CSS_SELECTOR, a_s)
-
-            link = [elem.get_attribute('href') for elem in a_]
-
-            if not link:
-                print('EMPTY...')
-                lnk_p_count = 555
-                print(f'\n==========================================\n')
-                break
-            else:
-                print(f'{lnk_p_count} --- > {link}')
-                time.sleep(0.3)
-                # write links to file
-                with open('urls.txt', 'a', encoding='utf-8') as file:
-                    for url in link:
-                        file.write(f'{url}\n')
-        if lnk_p_count == 555:
-            break
-
-    # # #
-    # # # END of "Collecting links..."
+    # # # # START of "Collecting links..."
+    # # # #
+    # browser.implicitly_wait(1.5)
+    # url_new = 'https://reinersuite.nrha.com/#/app/events/my-events'
+    # browser.get(url_new)
+    # time.sleep(2)
+    #
+    # tab_event_finder_xp = '//*[@id="summary-tab"]'
+    # tab_event_finder = browser.find_element(By.XPATH, tab_event_finder_xp).click()
+    #
+    # date_from_xp = '//*[@id="q-datepicker_3"]'
+    # date_from = browser.find_element(By.XPATH, date_from_xp)
+    # date_from.clear()
+    #
+    # if date_m < 10:
+    #     date_from.send_keys(f'0{date_m}/01/{date_y}')
+    # else:
+    #     date_from.send_keys(f'{date_m}/01/{date_y}')
+    #
+    # time.sleep(0.5)
+    # date_from.send_keys(Keys.RETURN)
+    # time.sleep(0.5)
+    # # ------------------------------------------------------
+    # days = monthrange(date_y, date_m)[1]
+    # # ------------------------------------------------------
+    # date_to_xp = '//*[@id="q-datepicker_5"]'
+    # date_to = browser.find_element(By.XPATH, date_to_xp)
+    #
+    # if date_m < 10:
+    #     date_to.send_keys(f'{date_m}/{days}/{date_y}')
+    # else:
+    #     date_to.send_keys(f'{date_m}/{days}/{date_y}')
+    #
+    # time.sleep(0.5)
+    # date_to.send_keys(Keys.RETURN)
+    # time.sleep(1)
+    #
+    # btn_search_xp = '//*[@id="finder"]/event-find/div/div/section/div/form/fieldset/div[2]/input[1]'
+    # btn_search = browser.find_element(By.XPATH, btn_search_xp).click()
+    #
+    # # clear file...
+    # with open('urls.txt', 'w+', encoding='utf-8') as file:
+    #     file.write('')
+    #
+    # for p_ in range(2, 30):
+    #     pag_xp = f'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[{p_}]/a'
+    #     print(pag_xp)
+    #     time.sleep(0.3)
+    #     if p_ > 2:
+    #         try:
+    #             pag = browser.find_element(By.XPATH, pag_xp).click()
+    #         except:
+    #             pass
+    #
+    #     lnk_p_count = 0
+    #     for i in range(1, 11):
+    #
+    #         lnk_p_count += 1
+    #
+    #         a_s = f'#finder > div > div > table > tbody > tr:nth-child({i}) > td:nth-child(1) > a'
+    #         a_ = browser.find_elements(By.CSS_SELECTOR, a_s)
+    #
+    #         link = [elem.get_attribute('href') for elem in a_]
+    #
+    #         if not link:
+    #             print('EMPTY...')
+    #             lnk_p_count = 555
+    #             print(f'\n==========================================\n')
+    #             break
+    #         else:
+    #             print(f'{lnk_p_count} --- > {link}')
+    #             time.sleep(0.3)
+    #             # write links to file
+    #             with open('urls.txt', 'a', encoding='utf-8') as file:
+    #                 for url in link:
+    #                     file.write(f'{url}\n')
+    #     if lnk_p_count == 555:
+    #         break
+    #
+    # # # #
+    # # # # END of "Collecting links..."
 
     # ===============================================================================================================
     # ===============================================================================================================
@@ -283,7 +284,7 @@ def _my(date_y, date_m):
         if res_bool:
             #refrash_time()
             element = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
-            time.sleep(2)
+            time.sleep(3)
             # mm/dd/yyyy
             data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
             data_ = browser.find_element(By.XPATH, data_xp).text
@@ -306,112 +307,139 @@ def _my(date_y, date_m):
             select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
             options = [x.text for x in select_box.options]
 
-            pos_num = 1
+            pos_num = 0
+
+            file_count = 0
+            file_pres_count = 0
+
+            number_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[2]'
+            number = (browser.find_element(By.XPATH, number_xp).text.split(':')[-1]).strip()
+
 
             for pos in options:
-                # select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
-                # select_box.selectByVisibleText(pos)
-                print(f'Option is: {pos}')
-                select_box.select_by_visible_text(pos)
-                element = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
+
+                #element = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
 
                 #data_today_time()
 
-
-                number_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[2]'
-                number = (browser.find_element(By.XPATH, number_xp).text.split(':')[-1]).strip()
-
-                title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
-                start_time = time.time()
-                try:
-                    WebDriverWait(browser, 15).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
-                except:
-                    pass
-                finish_time = time.time() - start_time
-                print(finish_time)
-
-                title = browser.find_element(By.XPATH, title_xp).text
-                print(title)
-
-                items_ = []
-
-                gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
-                gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
-
-                print(f'TEXT: {gr_yo_txt}')
-
-                for tr_ in range(1, 100):
-                    tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
-
-                    try:
-                        browser.find_element(By.XPATH, tr_xp)
-                    except:
-                        break
-
-                    # NEW items to file
-                    # PLACING	BACK#	HORSE	RIDER	OWNER	SCORE	EARNINGS(USD)
-                    pl_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
-                    ba_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[2]'
-                    ho_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[3]'
-                    ri_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[4]'
-                    ow_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[5]'
-                    sc_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[6]'
-
-                    if gr_yo_txt == 'GREEN':
-                        gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
-                        ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
-                        items_.append(
-                            {
-                                "PLACING": browser.find_element(By.XPATH, pl_xp).text,
-                                "BACK#": browser.find_element(By.XPATH, ba_xp).text,
-                                "HORSE": browser.find_element(By.XPATH, ho_xp).text,
-                                "RIDER": browser.find_element(By.XPATH, ri_xp).text,
-                                "OWNER": browser.find_element(By.XPATH, ow_xp).text,
-                                "SCORE": browser.find_element(By.XPATH, sc_xp).text,
-                                "GREEN": browser.find_element(By.XPATH, gr_yo).text,
-                                "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
-                            }
-                        )
-                    elif gr_yo_txt == 'YOUTH':
-                        gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
-                        ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
-                        items_.append(
-                            {
-                                "PLACING": browser.find_element(By.XPATH, pl_xp).text,
-                                "BACK#": browser.find_element(By.XPATH, ba_xp).text,
-                                "HORSE": browser.find_element(By.XPATH, ho_xp).text,
-                                "RIDER": browser.find_element(By.XPATH, ri_xp).text,
-                                "OWNER": browser.find_element(By.XPATH, ow_xp).text,
-                                "SCORE": browser.find_element(By.XPATH, sc_xp).text,
-                                "YOUTH": browser.find_element(By.XPATH, gr_yo).text,
-                                "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
-                            }
-                        )
-                    else:
-                        ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
-                        items_.append(
-                            {
-                                "PLACING": browser.find_element(By.XPATH, pl_xp).text,
-                                "BACK#": browser.find_element(By.XPATH, ba_xp).text,
-                                "HORSE": browser.find_element(By.XPATH, ho_xp).text,
-                                "RIDER": browser.find_element(By.XPATH, ri_xp).text,
-                                "OWNER": browser.find_element(By.XPATH, ow_xp).text,
-                                "SCORE": browser.find_element(By.XPATH, sc_xp).text,
-                                "NONE": 'NONE',
-                                "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
-                            }
-                        )
-
-                print(items_)
-                file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
-                file_name = f'./out/{file_name_}.json'
-
-                with open(file_name, 'w+', encoding='utf-8') as file:
-                    json.dump(items_, file, indent=4, ensure_ascii=False)
-
-                print(f'{data}_{number}_{title}\n\n')
-
+                file_count += 1
                 pos_num += 1
+
+                print(f'FILE_COUNT = {file_count}')
+                #file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
+                file_name_ = f'{data}_{number}_{pos}'.replace("#", "").replace(" ", "").replace("\\", "").replace("/", "")
+
+                file_name = f'./out/202106/{file_name_}.json'
+
+                fle = Path(file_name)
+                print(f'Download file: {fle}...')
+
+                download_bool = False
+
+                if fle.is_file():
+                    file_pres_count += 1
+                    print(f'{file_pres_count} File present! Let`s skip...\n')
+                    pass
+                else:
+                    print(f'File NO present! Downloding...\n')
+                    download_bool = True
+
+                if download_bool:
+                    # print(f'Option is: {pos}')
+                    select_box.select_by_visible_text(pos)
+                    title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
+                    start_time = time.time()
+                    try:
+                        WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
+                    except:
+                        pass
+                    finish_time = time.time() - start_time
+                    print(f'Data load time: {finish_time} sec\n')
+                    # title = browser.find_element(By.XPATH, title_xp).text
+                    # print(title)
+
+                    items_ = []
+
+                    gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
+                    gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
+
+                    #print(f'TEXT: {gr_yo_txt}')
+
+                    for tr_ in range(1, 100):
+                        tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
+
+                        try:
+                            browser.find_element(By.XPATH, tr_xp)
+                        except:
+                            break
+
+                        # NEW items to file
+                        # PLACING	BACK#	HORSE	RIDER	OWNER	SCORE	EARNINGS(USD)
+                        pl_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
+                        ba_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[2]'
+                        ho_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[3]'
+                        ri_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[4]'
+                        ow_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[5]'
+                        sc_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[6]'
+
+                        if gr_yo_txt == 'GREEN':
+                            gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                            ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
+                            items_.append(
+                                {
+                                    "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                                    "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                                    "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                                    "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                                    "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                                    "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                                    "GREEN": browser.find_element(By.XPATH, gr_yo).text,
+                                    "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                                }
+                            )
+                        elif gr_yo_txt == 'YOUTH':
+                            gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                            ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
+                            items_.append(
+                                {
+                                    "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                                    "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                                    "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                                    "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                                    "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                                    "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                                    "YOUTH": browser.find_element(By.XPATH, gr_yo).text,
+                                    "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                                }
+                            )
+                        else:
+                            ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                            items_.append(
+                                {
+                                    "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                                    "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                                    "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                                    "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                                    "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                                    "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                                    "NONE": 'NONE',
+                                    "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                                }
+                            )
+
+                    #print(items_)
+                    # file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
+                    # file_name = f'./out/{file_name_}.json'
+
+                    with open(file_name, 'w+', encoding='utf-8') as file:
+                        json.dump(items_, file, indent=4, ensure_ascii=False)
+
+                    print('- - - - - - - - - - - - - - - - - - saved!!!\n')
+
+
+                    #print(f'{data}_{number}_{title}\n\n')
+
+
 
             print('*****************************************')
 
