@@ -434,8 +434,9 @@ def _my(date_y, date_m):
 
                     print('- - - - - - - - - - - - - - - - - - saved!!!\n')
 
-            print(f'* * * * *   END of {number}   * * * * *')
+            print(f'* * * * *   END of {number}   * * * * *\n')
 
+    print(f'! ! ! ! !  Job completed successfully! Choose a new date for processing...  ! ! ! ! !')
     browser.close()
     browser.quit()
 
