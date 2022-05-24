@@ -205,49 +205,49 @@ def _my(date_y, date_m):
     # # # START of "Parsing data..."
     # # #
 
-    def gear_time():
-        gear_xp = '//*[@id="app"]/nav[2]/div/div[2]/ul[1]/li/a/i'
-        start_time = time.time()
-        try:
-            WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, gear_xp)))
-        except:
-            pass
-        finish_time = time.time() - start_time
-        print(f'GEAR: {finish_time}')
-
-    def results_time():
-        results_xp = '//*[@id="content"]/div/div/div/div/div/section/div/div[2]/ul/li[2]/a'
-        start_time = time.time()
-        try:
-            WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, results_xp)))
-        except:
-            pass
-        finish_time = time.time() - start_time
-        print(f'RESULTS_time: {finish_time}')
-
-    def refrash_time():
-        refresh_time_xp = '//*[@id="content"]/event-results/div/section[2]/div/div/div[2]/button'
-        start_time = time.time()
-        try:
-            WebDriverWait(browser, 20).until(EC.text_to_be_present_in_element(By.XPATH, refresh_time_xp))
-        except:
-            pass
-        finish_time = time.time() - start_time
-        print(f'REFRASH_time: {finish_time}')
-
-
-        # '//*[@id="content"]/event-results/div/section[2]/div/div/div[1]/select'
-
-    def data_today_time():
-        # refresh_time_xp = '//*[@id="content"]/event-results/div/section[2]/div/div/div[2]/button'
-        data_today_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[1]/div/span'
-        start_time = time.time()
-        try:
-            WebDriverWait(browser, 20).until(EC.text_to_be_present_in_element(By.XPATH, data_today_xp))
-        except:
-            pass
-        finish_time = time.time() - start_time
-        print(f'DATA_TO_DAY_time: {finish_time}')
+    # def gear_time():
+    #     gear_xp = '//*[@id="app"]/nav[2]/div/div[2]/ul[1]/li/a/i'
+    #     start_time = time.time()
+    #     try:
+    #         WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, gear_xp)))
+    #     except:
+    #         pass
+    #     finish_time = time.time() - start_time
+    #     print(f'GEAR: {finish_time}')
+    #
+    # def results_time():
+    #     results_xp = '//*[@id="content"]/div/div/div/div/div/section/div/div[2]/ul/li[2]/a'
+    #     start_time = time.time()
+    #     try:
+    #         WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, results_xp)))
+    #     except:
+    #         pass
+    #     finish_time = time.time() - start_time
+    #     print(f'RESULTS_time: {finish_time}')
+    #
+    # def refrash_time():
+    #     refresh_time_xp = '//*[@id="content"]/event-results/div/section[2]/div/div/div[2]/button'
+    #     start_time = time.time()
+    #     try:
+    #         WebDriverWait(browser, 20).until(EC.text_to_be_present_in_element(By.XPATH, refresh_time_xp))
+    #     except:
+    #         pass
+    #     finish_time = time.time() - start_time
+    #     print(f'REFRASH_time: {finish_time}')
+    #
+    #
+    #     # '//*[@id="content"]/event-results/div/section[2]/div/div/div[1]/select'
+    #
+    # def data_today_time():
+    #     # refresh_time_xp = '//*[@id="content"]/event-results/div/section[2]/div/div/div[2]/button'
+    #     data_today_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[1]/div/span'
+    #     start_time = time.time()
+    #     try:
+    #         WebDriverWait(browser, 20).until(EC.text_to_be_present_in_element(By.XPATH, data_today_xp))
+    #     except:
+    #         pass
+    #     finish_time = time.time() - start_time
+    #     print(f'DATA_TO_DAY_time: {finish_time}')
 
     def links_with_no_results(url):
         with open('links_with_no_results.txt', 'a', encoding='utf-8') as file:
@@ -268,7 +268,8 @@ def _my(date_y, date_m):
         browser.get(url)
 
         # time.sleep(3)
-        results_time()
+        #results_time()
+        element = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
 
         # find "Results"
         res_bool = False
@@ -280,8 +281,9 @@ def _my(date_y, date_m):
             links_with_no_results(url)
 
         if res_bool:
-            refrash_time()
-            time.sleep(1)
+            #refrash_time()
+            element = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
+            time.sleep(2)
             # mm/dd/yyyy
             data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
             data_ = browser.find_element(By.XPATH, data_xp).text
@@ -309,11 +311,12 @@ def _my(date_y, date_m):
             for pos in options:
                 # select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
                 # select_box.selectByVisibleText(pos)
-                print(pos)
-
+                print(f'Option is: {pos}')
                 select_box.select_by_visible_text(pos)
+                element = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
 
-                data_today_time()
+                #data_today_time()
+
 
                 number_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[2]'
                 number = (browser.find_element(By.XPATH, number_xp).text.split(':')[-1]).strip()
