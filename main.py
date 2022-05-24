@@ -262,6 +262,8 @@ def _my(date_y, date_m):
 
     browser.implicitly_wait(1.5)
 
+    file_count = 0
+
     for url in url_list:
         ### !!!!!!!!!!!!!!!!!!!!!
         browser.get(url)
@@ -309,9 +311,6 @@ def _my(date_y, date_m):
 
             pos_num = 0
 
-            file_count = 0
-            file_pres_count = 0
-
             number_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[2]'
             number = (browser.find_element(By.XPATH, number_xp).text.split(':')[-1]).strip()
 
@@ -337,8 +336,7 @@ def _my(date_y, date_m):
                 download_bool = False
 
                 if fle.is_file():
-                    file_pres_count += 1
-                    print(f'{file_pres_count} File present! Let`s skip...\n')
+                    print(f'File present! Let`s skip...\n')
                     pass
                 else:
                     print(f'File NO present! Downloding...\n')
@@ -436,12 +434,7 @@ def _my(date_y, date_m):
 
                     print('- - - - - - - - - - - - - - - - - - saved!!!\n')
 
-
-                    #print(f'{data}_{number}_{title}\n\n')
-
-
-
-            print('*****************************************')
+            print(f'* * * * *   END of {number}   * * * * *')
 
     browser.close()
     browser.quit()
