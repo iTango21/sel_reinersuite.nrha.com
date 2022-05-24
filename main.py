@@ -328,7 +328,7 @@ def _my(date_y, date_m):
                 #file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
                 file_name_ = f'{data}_{number}_{pos}'.replace("#", "").replace(" ", "").replace("\\", "").replace("/", "")
 
-                file_name = f'./out/202106/{file_name_}.json'
+                file_name = f'./out/{file_name_}.json'
 
                 fle = Path(file_name)
                 print(f'Download file: {fle}...')
