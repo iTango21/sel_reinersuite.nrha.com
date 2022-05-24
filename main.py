@@ -20,10 +20,10 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         # self.spinbox = tk.Spinbox(self, from_=1, to=12)
-        self.scale_y = tk.Scale(self, from_=2021, to=2022,
+        self.scale_y = tk.Scale(self, from_=1975, to=2022,
                                 orient=tk.HORIZONTAL)
 
-        self.scale_m = tk.Scale(self, from_=6, to=12,
+        self.scale_m = tk.Scale(self, from_=1, to=12,
                                 orient=tk.HORIZONTAL)
 
         self.btn = tk.Button(self, text="Parse!..",
@@ -118,87 +118,87 @@ def _my(date_y, date_m):
     # # # ===========================================================================================================
     # # # ===========================================================================================================
 
-    # # # # START of "Collecting links..."
-    # # # #
-    # browser.implicitly_wait(1.5)
-    # url_new = 'https://reinersuite.nrha.com/#/app/events/my-events'
-    # browser.get(url_new)
-    # time.sleep(2)
-    #
-    # tab_event_finder_xp = '//*[@id="summary-tab"]'
-    # tab_event_finder = browser.find_element(By.XPATH, tab_event_finder_xp).click()
-    #
-    # date_from_xp = '//*[@id="q-datepicker_3"]'
-    # date_from = browser.find_element(By.XPATH, date_from_xp)
-    # date_from.clear()
-    #
-    # if date_m < 10:
-    #     date_from.send_keys(f'0{date_m}/01/{date_y}')
-    # else:
-    #     date_from.send_keys(f'{date_m}/01/{date_y}')
-    #
-    # time.sleep(0.5)
-    # date_from.send_keys(Keys.RETURN)
-    # time.sleep(0.5)
-    # # ------------------------------------------------------
-    # days = monthrange(date_y, date_m)[1]
-    # # ------------------------------------------------------
-    # date_to_xp = '//*[@id="q-datepicker_5"]'
-    # date_to = browser.find_element(By.XPATH, date_to_xp)
-    #
-    # if date_m < 10:
-    #     date_to.send_keys(f'{date_m}/{days}/{date_y}')
-    # else:
-    #     date_to.send_keys(f'{date_m}/{days}/{date_y}')
-    #
-    # time.sleep(0.5)
-    # date_to.send_keys(Keys.RETURN)
-    # time.sleep(1)
-    #
-    # btn_search_xp = '//*[@id="finder"]/event-find/div/div/section/div/form/fieldset/div[2]/input[1]'
-    # btn_search = browser.find_element(By.XPATH, btn_search_xp).click()
-    #
-    # # clear file...
-    # with open('urls.txt', 'w+', encoding='utf-8') as file:
-    #     file.write('')
-    #
-    # for p_ in range(2, 30):
-    #     pag_xp = f'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[{p_}]/a'
-    #     print(pag_xp)
-    #     time.sleep(0.3)
-    #     if p_ > 2:
-    #         try:
-    #             pag = browser.find_element(By.XPATH, pag_xp).click()
-    #         except:
-    #             pass
-    #
-    #     lnk_p_count = 0
-    #     for i in range(1, 11):
-    #
-    #         lnk_p_count += 1
-    #
-    #         a_s = f'#finder > div > div > table > tbody > tr:nth-child({i}) > td:nth-child(1) > a'
-    #         a_ = browser.find_elements(By.CSS_SELECTOR, a_s)
-    #
-    #         link = [elem.get_attribute('href') for elem in a_]
-    #
-    #         if not link:
-    #             print('EMPTY...')
-    #             lnk_p_count = 555
-    #             print(f'\n==========================================\n')
-    #             break
-    #         else:
-    #             print(f'{lnk_p_count} --- > {link}')
-    #             time.sleep(0.3)
-    #             # write links to file
-    #             with open('urls.txt', 'a', encoding='utf-8') as file:
-    #                 for url in link:
-    #                     file.write(f'{url}\n')
-    #     if lnk_p_count == 555:
-    #         break
-    #
-    # # # #
-    # # # # END of "Collecting links..."
+    # # # START of "Collecting links..."
+    # # #
+    browser.implicitly_wait(1.5)
+    url_new = 'https://reinersuite.nrha.com/#/app/events/my-events'
+    browser.get(url_new)
+    time.sleep(2)
+
+    tab_event_finder_xp = '//*[@id="summary-tab"]'
+    tab_event_finder = browser.find_element(By.XPATH, tab_event_finder_xp).click()
+
+    date_from_xp = '//*[@id="q-datepicker_3"]'
+    date_from = browser.find_element(By.XPATH, date_from_xp)
+    date_from.clear()
+
+    if date_m < 10:
+        date_from.send_keys(f'0{date_m}/01/{date_y}')
+    else:
+        date_from.send_keys(f'{date_m}/01/{date_y}')
+
+    time.sleep(0.5)
+    date_from.send_keys(Keys.RETURN)
+    time.sleep(0.5)
+    # ------------------------------------------------------
+    days = monthrange(date_y, date_m)[1]
+    # ------------------------------------------------------
+    date_to_xp = '//*[@id="q-datepicker_5"]'
+    date_to = browser.find_element(By.XPATH, date_to_xp)
+
+    if date_m < 10:
+        date_to.send_keys(f'{date_m}/{days}/{date_y}')
+    else:
+        date_to.send_keys(f'{date_m}/{days}/{date_y}')
+
+    time.sleep(0.5)
+    date_to.send_keys(Keys.RETURN)
+    time.sleep(1)
+
+    btn_search_xp = '//*[@id="finder"]/event-find/div/div/section/div/form/fieldset/div[2]/input[1]'
+    btn_search = browser.find_element(By.XPATH, btn_search_xp).click()
+
+    # clear file...
+    with open('urls.txt', 'w+', encoding='utf-8') as file:
+        file.write('')
+
+    for p_ in range(2, 30):
+        pag_xp = f'//*[@id="finder"]/div/div/table/tfoot/tr/td/mfbootstrappaginator/mfpaginator/ul[1]/li[{p_}]/a'
+        print(pag_xp)
+        time.sleep(0.3)
+        if p_ > 2:
+            try:
+                pag = browser.find_element(By.XPATH, pag_xp).click()
+            except:
+                pass
+
+        lnk_p_count = 0
+        for i in range(1, 11):
+
+            lnk_p_count += 1
+
+            a_s = f'#finder > div > div > table > tbody > tr:nth-child({i}) > td:nth-child(1) > a'
+            a_ = browser.find_elements(By.CSS_SELECTOR, a_s)
+
+            link = [elem.get_attribute('href') for elem in a_]
+
+            if not link:
+                print('EMPTY...')
+                lnk_p_count = 555
+                print(f'\n==========================================\n')
+                break
+            else:
+                print(f'{lnk_p_count} --- > {link}')
+                time.sleep(0.3)
+                # write links to file
+                with open('urls.txt', 'a', encoding='utf-8') as file:
+                    for url in link:
+                        file.write(f'{url}\n')
+        if lnk_p_count == 555:
+            break
+
+    # # #
+    # # # END of "Collecting links..."
 
     # ===============================================================================================================
     # ===============================================================================================================
@@ -286,7 +286,7 @@ def _my(date_y, date_m):
         if res_bool:
             #refrash_time()
             element = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
-            time.sleep(3)
+            time.sleep(2)
             # mm/dd/yyyy
             data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
             data_ = browser.find_element(By.XPATH, data_xp).text
@@ -348,7 +348,7 @@ def _my(date_y, date_m):
                     title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
                     start_time = time.time()
                     try:
-                        WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
+                        WebDriverWait(browser, 60).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
                     except:
                         pass
                     finish_time = time.time() - start_time
