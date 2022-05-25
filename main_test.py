@@ -148,7 +148,7 @@ def _my(link_):
 
     #refrash_time()
     element = WebDriverWait(browser, 60).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
-    time.sleep(2)
+    time.sleep(10)
     # mm/dd/yyyy
     data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
     data_ = browser.find_element(By.XPATH, data_xp).text
