@@ -292,7 +292,7 @@ def _my(date_y, date_m):
 
         if res_bool:
             #refrash_time()
-            element = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
+            element = WebDriverWait(browser, 60).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
             time.sleep(2)
             # mm/dd/yyyy
             data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
@@ -343,7 +343,7 @@ def _my(date_y, date_m):
 
                 print(f'FILE_COUNT = {file_count}')
                 #file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
-                file_name_ = f'{data}_{number}_{pos}'.replace("#", "").replace(" ", "").replace("\\", "").replace("/", "")
+                file_name_ = f'{data}_{number}_{pos}'.replace("#", "").replace(" ", "").replace("\\", "").replace("/", "").replace('"', '=')
 
                 file_name = f'./out/{file_name_}.json'
 
@@ -365,7 +365,7 @@ def _my(date_y, date_m):
                     title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
                     start_time = time.time()
                     try:
-                        WebDriverWait(browser, 60).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
+                        WebDriverWait(browser, 120).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
                     except:
                         pass
                     finish_time = time.time() - start_time
@@ -378,7 +378,9 @@ def _my(date_y, date_m):
                     gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
                     gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
 
-                    #print(f'TEXT: {gr_yo_txt}')
+                    add_col = 0
+                    if gr_yo_txt == 'NOMINATOR':
+                        add_col = 2
 
                     for tr_ in range(1, 100):
                         tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
@@ -398,6 +400,14 @@ def _my(date_y, date_m):
                         sc_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[6]'
 
                         if gr_yo_txt == 'GREEN':
+                            # ! ! ! ! ! Find "NOMINATOR" & "NOMINATOR PAYOUT"
+                            #
+                            nom_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[8]'
+                            nom_txt = browser.find_element(By.XPATH, nom_xp).text
+                            if nom_txt == 'NOMINATOR':
+                                add_col = 2
+                            else:
+                                add_col = 0
                             gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
                             ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{8 + add_col}]'
                             items_.append(
@@ -413,6 +423,14 @@ def _my(date_y, date_m):
                                 }
                             )
                         elif gr_yo_txt == 'YOUTH':
+                            # ! ! ! ! ! Find "NOMINATOR" & "NOMINATOR PAYOUT"
+                            #
+                            nom_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[8]'
+                            nom_txt = browser.find_element(By.XPATH, nom_xp).text
+                            if nom_txt == 'NOMINATOR':
+                                add_col = 2
+                            else:
+                                add_col = 0
                             gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
                             ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{8 + add_col}]'
                             items_.append(
@@ -428,7 +446,7 @@ def _my(date_y, date_m):
                                 }
                             )
                         else:
-                            ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                            ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{7 + add_col}]'
                             items_.append(
                                 {
                                     "PLACING": browser.find_element(By.XPATH, pl_xp).text,
