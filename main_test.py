@@ -35,13 +35,17 @@ class LoginApp(tk.Tk):
         global link_
         link_ = self.link.get()
         print(f"Link entered: {link_}")
+        self.parsing_btn.forget()
+        self.parsing_btn.update()
+        self.clear_btn.forget()
+        self.clear_btn.update()
         _my(link_)
 
     def clear_form(self):
         self.link.delete(0, tk.END)
         self.link.focus_set()
 
-
+# https://reinersuite.nrha.com/#/app/events/event-results/72387
 # # # ================================================================================================================
 # # # ================================================================================================================
 
@@ -304,13 +308,15 @@ def _my(link_):
 
     print(f'* * * * *   END of {number}   * * * * *\n')
 
-    print(f'! ! ! ! !  Job completed successfully! Choose a new date for processing...  ! ! ! ! !')
+    print(f'! ! ! ! !  Job completed successfully! Enter a new link for processing...  ! ! ! ! !')
     browser.close()
     browser.quit()
 
-    app.btn["state"] = "normal"
-    app.btn.pack()
-    app.btn.update()
+    app.parsing_btn["state"] = "normal"
+    app.parsing_btn.pack()
+    app.parsing_btn.update()
+    app.clear_btn.pack()
+    app.clear_btn.update()
 
 
 if __name__ == "__main__":
