@@ -181,6 +181,9 @@ def _my(link_):
     nominator_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
     nominator_txt = browser.find_element(By.XPATH, nominator_xp).text
 
+
+
+
     if nominator_txt == 'NOMINATOR':
         add_col = 2
     else:
@@ -233,7 +236,9 @@ def _my(link_):
             gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
             gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
 
-            #print(f'TEXT: {gr_yo_txt}')
+            add_col = 0
+            if gr_yo_txt == 'NOMINATOR':
+                add_col = 2
 
             for tr_ in range(1, 100):
                 tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
@@ -253,6 +258,14 @@ def _my(link_):
                 sc_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[6]'
 
                 if gr_yo_txt == 'GREEN':
+                    # ! ! ! ! ! Find "NOMINATOR" & "NOMINATOR PAYOUT"
+                    #
+                    nom_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[8]'
+                    nom_txt = browser.find_element(By.XPATH, nom_xp).text
+                    if nom_txt == 'NOMINATOR':
+                        add_col = 2
+                    else:
+                        add_col = 0
                     gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
                     ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{8 + add_col}]'
                     items_.append(
@@ -268,6 +281,14 @@ def _my(link_):
                         }
                     )
                 elif gr_yo_txt == 'YOUTH':
+                    # ! ! ! ! ! Find "NOMINATOR" & "NOMINATOR PAYOUT"
+                    #
+                    nom_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[8]'
+                    nom_txt = browser.find_element(By.XPATH, nom_xp).text
+                    if nom_txt == 'NOMINATOR':
+                        add_col = 2
+                    else:
+                        add_col = 0
                     gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
                     ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{8 + add_col}]'
                     items_.append(
@@ -283,7 +304,7 @@ def _my(link_):
                         }
                     )
                 else:
-                    ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                    ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{7 + add_col}]'
                     items_.append(
                         {
                             "PLACING": browser.find_element(By.XPATH, pl_xp).text,
