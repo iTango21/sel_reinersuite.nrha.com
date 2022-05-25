@@ -19,8 +19,15 @@ ua = ua.random
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
+
+        with open('config.json', 'r', encoding='utf-8') as set_:
+            set_data = json.load(set_)
+
+        year_from = set_data['year_from']
+        year_to = set_data['year_to']
+
         # self.spinbox = tk.Spinbox(self, from_=1, to=12)
-        self.scale_y = tk.Scale(self, from_=1975, to=2022,
+        self.scale_y = tk.Scale(self, from_=year_from, to=year_to,
                                 orient=tk.HORIZONTAL)
 
         self.scale_m = tk.Scale(self, from_=1, to=12,
