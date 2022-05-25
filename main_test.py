@@ -107,7 +107,7 @@ def _my(link_):
     gear_xp = '//*[@id="app"]/nav[2]/div/div[2]/ul[1]/li/a/i'
     start_time = time.time()
     try:
-        WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, gear_xp)))
+        WebDriverWait(browser, 60).until(EC.element_to_be_clickable((By.XPATH, gear_xp)))
     except:
         pass
     finish_time = time.time() - start_time
@@ -147,7 +147,7 @@ def _my(link_):
 
 
     #refrash_time()
-    element = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
+    element = WebDriverWait(browser, 60).until(EC.presence_of_element_located((By.TAG_NAME, "html")))
     time.sleep(2)
     # mm/dd/yyyy
     data_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[2]/div[1]/p'
@@ -223,7 +223,7 @@ def _my(link_):
             title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
             start_time = time.time()
             try:
-                WebDriverWait(browser, 60).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
+                WebDriverWait(browser, 100).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
             except:
                 pass
             finish_time = time.time() - start_time
