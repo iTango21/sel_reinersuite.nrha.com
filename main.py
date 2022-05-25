@@ -314,6 +314,16 @@ def _my(date_y, date_m):
             number_xp = '//*[@id="content"]/event-results/div/section[1]/div/div/event-info/div/div/section/div/div[1]/div[1]/p[2]'
             number = (browser.find_element(By.XPATH, number_xp).text.split(':')[-1]).strip()
 
+            # ! ! ! ! ! Find "NOMINATOR" & "NOMINATOR PAYOUT"
+            #
+            nominator_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
+            nominator_txt = browser.find_element(By.XPATH, nominator_xp).text
+
+            if nominator_txt == 'NOMINATOR':
+                add_col = 2
+            else:
+                add_col = 0
+
 
             for pos in options:
 
@@ -382,7 +392,7 @@ def _my(date_y, date_m):
 
                         if gr_yo_txt == 'GREEN':
                             gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
-                            ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
+                            ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{8 + add_col}]'
                             items_.append(
                                 {
                                     "PLACING": browser.find_element(By.XPATH, pl_xp).text,
@@ -397,7 +407,7 @@ def _my(date_y, date_m):
                             )
                         elif gr_yo_txt == 'YOUTH':
                             gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
-                            ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[8]'
+                            ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{8 + add_col}]'
                             items_.append(
                                 {
                                     "PLACING": browser.find_element(By.XPATH, pl_xp).text,

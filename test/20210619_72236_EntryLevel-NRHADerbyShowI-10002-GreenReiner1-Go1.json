@@ -1,0 +1,332 @@
+[
+    {
+        "PLACING": "1",
+        "BACK#": "1029",
+        "HORSE": "Surprized",
+        "RIDER": "Natalie K. Vargo",
+        "OWNER": "Mike Vargo",
+        "SCORE": "144.50",
+        "GREEN": "42",
+        "EARNINGS(USD)": "$96.37"
+    },
+    {
+        "PLACING": "2",
+        "BACK#": "1004",
+        "HORSE": "Xtra Sparkles N Town",
+        "RIDER": "Natalie Ellis",
+        "OWNER": "Michel B. Ellis",
+        "SCORE": "141.00",
+        "GREEN": "41",
+        "EARNINGS(USD)": "$71.23"
+    },
+    {
+        "PLACING": "3",
+        "BACK#": "1006",
+        "HORSE": "Wallalena",
+        "RIDER": "Ryan Kroeger",
+        "OWNER": "Ryan Kroeger",
+        "SCORE": "139.50",
+        "GREEN": "40",
+        "EARNINGS(USD)": "$50.28"
+    },
+    {
+        "PLACING": "4",
+        "BACK#": "1162",
+        "HORSE": "Shiner Joe",
+        "RIDER": "Lynnette M Payne",
+        "OWNER": "Lynnette M Payne",
+        "SCORE": "139.00",
+        "GREEN": "39",
+        "EARNINGS(USD)": "$37.71"
+    },
+    {
+        "PLACING": "5",
+        "BACK#": "1161",
+        "HORSE": "Kentucky Crome",
+        "RIDER": "Angela M Pennington",
+        "OWNER": "Angela M Pennington",
+        "SCORE": "138.00",
+        "GREEN": "38",
+        "EARNINGS(USD)": "$33.52"
+    },
+    {
+        "PLACING": "6",
+        "BACK#": "1041",
+        "HORSE": "Vintage Neptune",
+        "RIDER": "Pam Griggs",
+        "OWNER": "Pam Griggs",
+        "SCORE": "137.00",
+        "GREEN": "37",
+        "EARNINGS(USD)": "$29.33"
+    },
+    {
+        "PLACING": "7",
+        "BACK#": "1078",
+        "HORSE": "Our Special Nite",
+        "RIDER": "Janice Lynn Thomas",
+        "OWNER": "Janice Lynn Thomas",
+        "SCORE": "136.50",
+        "GREEN": "35",
+        "EARNINGS(USD)": "$20.95"
+    },
+    {
+        "PLACING": "7",
+        "BACK#": "1067",
+        "HORSE": "DC Wimpys Gota Gun",
+        "RIDER": "Tessa Kathleen Watchous",
+        "OWNER": "Tessa Kathleen Watchous",
+        "SCORE": "136.50",
+        "GREEN": "35",
+        "EARNINGS(USD)": "$20.95"
+    },
+    {
+        "PLACING": "7",
+        "BACK#": "1227",
+        "HORSE": "Dreamin About Sailin",
+        "RIDER": "Lindsey Lester",
+        "OWNER": "Jamie Traiteur Lester",
+        "SCORE": "136.50",
+        "GREEN": "35",
+        "EARNINGS(USD)": "$20.95"
+    },
+    {
+        "PLACING": "10",
+        "BACK#": "1069",
+        "HORSE": "Dun It Spooks Way",
+        "RIDER": "Chloe Rose Cummings",
+        "OWNER": "Chloe Rose Cummings",
+        "SCORE": "135.50",
+        "GREEN": "32.5",
+        "EARNINGS(USD)": "$13.62"
+    },
+    {
+        "PLACING": "10",
+        "BACK#": "1147",
+        "HORSE": "Wallys Chic",
+        "RIDER": "Maren E McIlnay",
+        "OWNER": "Tonya R McIlnay",
+        "SCORE": "135.50",
+        "GREEN": "32.5",
+        "EARNINGS(USD)": "$13.62"
+    },
+    {
+        "PLACING": "12",
+        "BACK#": "1251",
+        "HORSE": "A Memorable Nite",
+        "RIDER": "Sarah Malyn Savage",
+        "OWNER": "Sarah Malyn Savage",
+        "SCORE": "135.00",
+        "GREEN": "31",
+        "EARNINGS(USD)": "$10.47"
+    },
+    {
+        "PLACING": "13",
+        "BACK#": "1035",
+        "HORSE": "Magnums Gun",
+        "RIDER": "Wendy May",
+        "OWNER": "Wendy May",
+        "SCORE": "134.50",
+        "GREEN": "30",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "14",
+        "BACK#": "1073",
+        "HORSE": "Coded In Redhot",
+        "RIDER": "Afton Merritt",
+        "OWNER": "Afton Merritt",
+        "SCORE": "133.50",
+        "GREEN": "28",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "14",
+        "BACK#": "1014",
+        "HORSE": "Meligunaction",
+        "RIDER": "Leah Tate",
+        "OWNER": "Leah Tate",
+        "SCORE": "133.50",
+        "GREEN": "28",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "14",
+        "BACK#": "1136",
+        "HORSE": "Shesafridaynightchic",
+        "RIDER": "Morgan Geelhaar",
+        "OWNER": "Morgan Geelhaar",
+        "SCORE": "133.50",
+        "GREEN": "28",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "17",
+        "BACK#": "1107",
+        "HORSE": "Arkys Smart Leo Lad",
+        "RIDER": "Riley Marie Lallo",
+        "OWNER": "Riley Marie Lallo",
+        "SCORE": "133.00",
+        "GREEN": "26",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "18",
+        "BACK#": "1194",
+        "HORSE": "Miss Frosty Olena",
+        "RIDER": "Wendy J Hamner",
+        "OWNER": "Wendy J Hamner",
+        "SCORE": "131.50",
+        "GREEN": "25",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "19",
+        "BACK#": "1055",
+        "HORSE": "Gold N Tinseltown",
+        "RIDER": "Hannah Montgomery",
+        "OWNER": "Montgomery Reining Horses, LLC",
+        "SCORE": "130.50",
+        "GREEN": "24",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "20",
+        "BACK#": "1259",
+        "HORSE": "Black N Boom",
+        "RIDER": "Peyton Vandorp",
+        "OWNER": "Vandorp Inc.",
+        "SCORE": "129.50",
+        "GREEN": "22.5",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "20",
+        "BACK#": "1092",
+        "HORSE": "Paps Last Nite",
+        "RIDER": "Misty Dawn Eastep",
+        "OWNER": "Misty Dawn Eastep",
+        "SCORE": "129.50",
+        "GREEN": "22.5",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "22",
+        "BACK#": "1253",
+        "HORSE": "Cromeo",
+        "RIDER": "Christa Lanham",
+        "OWNER": "Christa Lanham",
+        "SCORE": "129.00",
+        "GREEN": "20.5",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "22",
+        "BACK#": "1106",
+        "HORSE": "Capones Getaway Ride",
+        "RIDER": "Riley Marie Lallo",
+        "OWNER": "Melinda (Mimi) L. Frye",
+        "SCORE": "129.00",
+        "GREEN": "20.5",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "24",
+        "BACK#": "1202",
+        "HORSE": "Dunnies Luna Negra",
+        "RIDER": "Connie M Russell",
+        "OWNER": "Connie M Russell",
+        "SCORE": "127.50",
+        "GREEN": "19",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "25",
+        "BACK#": "1113",
+        "HORSE": "Remins Bendigo",
+        "RIDER": "Cara Collins",
+        "OWNER": "Cara Collins",
+        "SCORE": "125.50",
+        "GREEN": "18",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "26",
+        "BACK#": "1219",
+        "HORSE": "Coronas Cool Cash",
+        "RIDER": "Lea Ann Pinner",
+        "OWNER": "Lea Ann Pinner",
+        "SCORE": "124.50",
+        "GREEN": "17",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "27",
+        "BACK#": "1265",
+        "HORSE": "Dual Chrome Exhaust",
+        "RIDER": "Norah L Swann",
+        "OWNER": "Megan L. Swann",
+        "SCORE": "124.00",
+        "GREEN": "16",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "28",
+        "BACK#": "1056",
+        "HORSE": "Woh Please",
+        "RIDER": "Graclyn Marie Hansmeyer",
+        "OWNER": "Graclyn Marie Hansmeyer",
+        "SCORE": "123.00",
+        "GREEN": "15",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "29",
+        "BACK#": "1199",
+        "HORSE": "Juicyher",
+        "RIDER": "Katie M Grubner",
+        "OWNER": "Nancy Alford",
+        "SCORE": "121.00",
+        "GREEN": "14",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "30",
+        "BACK#": "1217",
+        "HORSE": "San Francisco Spook",
+        "RIDER": "Nancy Alford",
+        "OWNER": "Nancy Alford",
+        "SCORE": "118.50",
+        "GREEN": "13",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "31",
+        "BACK#": "1094",
+        "HORSE": "Gunnin For Dreams",
+        "RIDER": "Colten Williams",
+        "OWNER": "Steve Williams",
+        "SCORE": "117.00",
+        "GREEN": "12",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "32",
+        "BACK#": "504",
+        "HORSE": "Dun Trashed It",
+        "RIDER": "Wayne K Gersoff",
+        "OWNER": "Wayne K Gersoff",
+        "SCORE": "113.50",
+        "GREEN": "11",
+        "EARNINGS(USD)": "$0.00"
+    },
+    {
+        "PLACING": "33",
+        "BACK#": "1218",
+        "HORSE": "Jos Next Top Gem",
+        "RIDER": "Bella Pearle Beck",
+        "OWNER": "Krista Beck",
+        "SCORE": "110.50",
+        "GREEN": "10",
+        "EARNINGS(USD)": "$0.00"
+    }
+]
