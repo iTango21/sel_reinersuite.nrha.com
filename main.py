@@ -343,7 +343,13 @@ def _my(date_y, date_m):
 
                 print(f'FILE_COUNT = {file_count}')
                 #file_name_ = f'{data}_{number}_{pos_num}_{title}'.replace("\\", "").replace("/", "")
-                file_name_ = f'{data}_{number}_{pos}'.replace("#", "").replace(" ", "").replace("\\", "").replace("/", "").replace('"', '=')
+                file_name_ = f'{data}_{number}_{pos}' \
+                    .replace("#", "") \
+                    .replace(" ", "") \
+                    .replace("\\", "") \
+                    .replace("/", "") \
+                    .replace('"', '=') \
+                    .replace("*", "")
 
                 file_name = f'./out/{file_name_}.json'
 

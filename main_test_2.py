@@ -13,6 +13,8 @@ from pathlib import Path
 ua = UserAgent()
 ua = ua.random
 
+import pickle
+
 from tkinter import *
 from tkinter import messagebox as mb
 from tkinter.ttk import Combobox
@@ -149,6 +151,9 @@ except:
 finish_time = time.time() - start_time
 print(finish_time)
 
+# cookies
+pickle.dump(browser.get_cookie(), open(f"cookies_reinersuite", "wb"))
+
 browser.implicitly_wait(1.5)
 # # #
 # # # END of "login..."
@@ -230,7 +235,8 @@ def pg_opt(opt_):
             .replace(" ", "")\
             .replace("\\", "")\
             .replace("/", "")\
-            .replace('"', '=')
+            .replace('"', '=')\
+            .replace("*", "")
 
         file_name = f'./test2/{file_name_}.json'
 
