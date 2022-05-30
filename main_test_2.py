@@ -151,8 +151,8 @@ except:
 finish_time = time.time() - start_time
 print(finish_time)
 
-# cookies
-pickle.dump(browser.get_cookie(), open(f"cookies_reinersuite", "wb"))
+# # cookies
+# pickle.dump(browser.get_cookie(), open(f"cookies_reinersuite", "wb"))
 
 browser.implicitly_wait(1.5)
 # # #
