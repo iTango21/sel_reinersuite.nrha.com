@@ -368,8 +368,8 @@ def pg_opt(opt_):
     print(f'* * * * *   END of {number}   * * * * *\n')
 
     print(f'! ! ! ! !  Job completed successfully! Enter a new link for processing...  ! ! ! ! !')
-    browser.close()
-    browser.quit()
+    # browser.close()
+    # browser.quit()
 
 
 if __name__ == "__main__":
