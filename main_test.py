@@ -336,8 +336,8 @@ def _my(link_):
     print(f'* * * * *   END of {number}   * * * * *\n')
 
     print(f'! ! ! ! !  Job completed successfully! Enter a new link for processing...  ! ! ! ! !')
-    browser.close()
-    browser.quit()
+    # browser.close()
+    # browser.quit()
 
     app.parsing_btn["state"] = "normal"
     app.parsing_btn.pack()

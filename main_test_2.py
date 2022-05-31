@@ -230,140 +230,140 @@ def pg_opt(opt_):
         add_col = 0
 
 
-        file_name_ = f'{data}_{number}_{pos}'\
-            .replace("#", "")\
-            .replace(" ", "")\
-            .replace("\\", "")\
-            .replace("/", "")\
-            .replace('"', '=')\
-            .replace("*", "")
+    file_name_ = f'{data}_{number}_{pos}'\
+        .replace("#", "")\
+        .replace(" ", "")\
+        .replace("\\", "")\
+        .replace("/", "")\
+        .replace('"', '=')\
+        .replace("*", "")
 
-        file_name = f'./test2/{file_name_}.json'
+    file_name = f'./test2/{file_name_}.json'
 
-        fle = Path(file_name)
-        print(f'Download file: {fle}...')
+    fle = Path(file_name)
+    print(f'Download file: {fle}...')
 
-        download_bool = False
+    download_bool = False
 
-        if fle.is_file():
-            print(f'File present! Let`s skip...\n')
-            pass
-        else:
-            print(f'File NO present! Downloding...\n')
-            download_bool = True
+    if fle.is_file():
+        print(f'File present! Let`s skip...\n')
+        pass
+    else:
+        print(f'File NO present! Downloding...\n')
+        download_bool = True
 
-        # link_ = 'https://reinersuite.nrha.com/#/app/events/event-results/72268'
+    # link_ = 'https://reinersuite.nrha.com/#/app/events/event-results/72268'
 
-        select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
-        #options = [x.text for x in select_box.options]
+    select_box = Select(browser.find_element(By.NAME, 'selectedClass'))
+    #options = [x.text for x in select_box.options]
+    select_box.select_by_visible_text(pos)
+
+    if download_bool:
+        # print(f'Option is: {pos}')
         select_box.select_by_visible_text(pos)
+        title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
+        start_time = time.time()
+        try:
+            WebDriverWait(browser, 100).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
+        except:
+            pass
+        finish_time = time.time() - start_time
+        print(f'Data load time: {finish_time} sec\n')
+        # title = browser.find_element(By.XPATH, title_xp).text
+        # print(title)
 
-        if download_bool:
-            # print(f'Option is: {pos}')
-            select_box.select_by_visible_text(pos)
-            title_xp = '//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[2]/div/h4[1]'
-            start_time = time.time()
+        items_ = []
+
+        gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
+        gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
+
+        add_col = 0
+        if gr_yo_txt == 'NOMINATOR':
+            add_col = 2
+
+        for tr_ in range(1, 100):
+            tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
+
             try:
-                WebDriverWait(browser, 100).until(EC.element_to_be_clickable((By.XPATH, title_xp)))
+                browser.find_element(By.XPATH, tr_xp)
             except:
-                pass
-            finish_time = time.time() - start_time
-            print(f'Data load time: {finish_time} sec\n')
-            # title = browser.find_element(By.XPATH, title_xp).text
-            # print(title)
+                break
 
-            items_ = []
+            # NEW items to file
+            # PLACING	BACK#	HORSE	RIDER	OWNER	SCORE	EARNINGS(USD)
+            pl_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
+            ba_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[2]'
+            ho_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[3]'
+            ri_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[4]'
+            ow_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[5]'
+            sc_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[6]'
 
-            gr_yo_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[7]'
-            gr_yo_txt = browser.find_element(By.XPATH, gr_yo_xp).text
-
-            add_col = 0
-            if gr_yo_txt == 'NOMINATOR':
-                add_col = 2
-
-            for tr_ in range(1, 100):
-                tr_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
-
-                try:
-                    browser.find_element(By.XPATH, tr_xp)
-                except:
-                    break
-
-                # NEW items to file
-                # PLACING	BACK#	HORSE	RIDER	OWNER	SCORE	EARNINGS(USD)
-                pl_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[1]'
-                ba_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[2]'
-                ho_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[3]'
-                ri_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[4]'
-                ow_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[5]'
-                sc_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[6]'
-
-                if gr_yo_txt == 'GREEN':
-                    # ! ! ! ! ! Find "NOMINATOR" & "NOMINATOR PAYOUT"
-                    #
-                    nom_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[8]'
-                    nom_txt = browser.find_element(By.XPATH, nom_xp).text
-                    if nom_txt == 'NOMINATOR':
-                        add_col = 2
-                    else:
-                        add_col = 0
-                    gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
-                    ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{8 + add_col}]'
-                    items_.append(
-                        {
-                            "PLACING": browser.find_element(By.XPATH, pl_xp).text,
-                            "BACK#": browser.find_element(By.XPATH, ba_xp).text,
-                            "HORSE": browser.find_element(By.XPATH, ho_xp).text,
-                            "RIDER": browser.find_element(By.XPATH, ri_xp).text,
-                            "OWNER": browser.find_element(By.XPATH, ow_xp).text,
-                            "SCORE": browser.find_element(By.XPATH, sc_xp).text,
-                            "GREEN": browser.find_element(By.XPATH, gr_yo).text,
-                            "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
-                        }
-                    )
-                elif gr_yo_txt == 'YOUTH':
-                    # ! ! ! ! ! Find "NOMINATOR" & "NOMINATOR PAYOUT"
-                    #
-                    nom_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[8]'
-                    nom_txt = browser.find_element(By.XPATH, nom_xp).text
-                    if nom_txt == 'NOMINATOR':
-                        add_col = 2
-                    else:
-                        add_col = 0
-                    gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
-                    ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{8 + add_col}]'
-                    items_.append(
-                        {
-                            "PLACING": browser.find_element(By.XPATH, pl_xp).text,
-                            "BACK#": browser.find_element(By.XPATH, ba_xp).text,
-                            "HORSE": browser.find_element(By.XPATH, ho_xp).text,
-                            "RIDER": browser.find_element(By.XPATH, ri_xp).text,
-                            "OWNER": browser.find_element(By.XPATH, ow_xp).text,
-                            "SCORE": browser.find_element(By.XPATH, sc_xp).text,
-                            "YOUTH": browser.find_element(By.XPATH, gr_yo).text,
-                            "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
-                        }
-                    )
+            if gr_yo_txt == 'GREEN':
+                # ! ! ! ! ! Find "NOMINATOR" & "NOMINATOR PAYOUT"
+                #
+                nom_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[8]'
+                nom_txt = browser.find_element(By.XPATH, nom_xp).text
+                if nom_txt == 'NOMINATOR':
+                    add_col = 2
                 else:
-                    ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{7 + add_col}]'
-                    items_.append(
-                        {
-                            "PLACING": browser.find_element(By.XPATH, pl_xp).text,
-                            "BACK#": browser.find_element(By.XPATH, ba_xp).text,
-                            "HORSE": browser.find_element(By.XPATH, ho_xp).text,
-                            "RIDER": browser.find_element(By.XPATH, ri_xp).text,
-                            "OWNER": browser.find_element(By.XPATH, ow_xp).text,
-                            "SCORE": browser.find_element(By.XPATH, sc_xp).text,
-                            "NONE": 'NONE',
-                            "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
-                        }
-                    )
+                    add_col = 0
+                gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{8 + add_col}]'
+                items_.append(
+                    {
+                        "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                        "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                        "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                        "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                        "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                        "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                        "GREEN": browser.find_element(By.XPATH, gr_yo).text,
+                        "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                    }
+                )
+            elif gr_yo_txt == 'YOUTH':
+                # ! ! ! ! ! Find "NOMINATOR" & "NOMINATOR PAYOUT"
+                #
+                nom_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/thead/tr/th[8]'
+                nom_txt = browser.find_element(By.XPATH, nom_xp).text
+                if nom_txt == 'NOMINATOR':
+                    add_col = 2
+                else:
+                    add_col = 0
+                gr_yo = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[7]'
+                ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{8 + add_col}]'
+                items_.append(
+                    {
+                        "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                        "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                        "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                        "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                        "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                        "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                        "YOUTH": browser.find_element(By.XPATH, gr_yo).text,
+                        "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                    }
+                )
+            else:
+                ea_xp = f'//*[@id="content"]/event-results/div/section[3]/div[2]/div[2]/div/div[4]/div/table/tbody/tr[{tr_}]/td[{7 + add_col}]'
+                items_.append(
+                    {
+                        "PLACING": browser.find_element(By.XPATH, pl_xp).text,
+                        "BACK#": browser.find_element(By.XPATH, ba_xp).text,
+                        "HORSE": browser.find_element(By.XPATH, ho_xp).text,
+                        "RIDER": browser.find_element(By.XPATH, ri_xp).text,
+                        "OWNER": browser.find_element(By.XPATH, ow_xp).text,
+                        "SCORE": browser.find_element(By.XPATH, sc_xp).text,
+                        "NONE": 'NONE',
+                        "EARNINGS(USD)": browser.find_element(By.XPATH, ea_xp).text
+                    }
+                )
 
 
-            with open(file_name, 'w+', encoding='utf-8') as file:
-                json.dump(items_, file, indent=4, ensure_ascii=False)
+        with open(file_name, 'w+', encoding='utf-8') as file:
+            json.dump(items_, file, indent=4, ensure_ascii=False)
 
-            print('- - - - - - - - - - - - - - - - - - saved!!!\n')
+        print('- - - - - - - - - - - - - - - - - - saved!!!\n')
 
     print(f'* * * * *   END of {number}   * * * * *\n')
 

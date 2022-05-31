@@ -490,3 +490,27 @@ if __name__ == "__main__":
     app = App()
     # tk.Button(app, text="Quit", command=app.quit).pack()
     app.mainloop()
+
+
+"""
+
+02/2016
+
+
+https://reinersuite.nrha.com/#/app/events/event-results/20209
+https://reinersuite.nrha.com/#/app/events/event-results/20235
+https://reinersuite.nrha.com/#/app/events/event-results/20219
+https://reinersuite.nrha.com/#/app/events/event-results/30328
+https://reinersuite.nrha.com/#/app/events/event-results/20246
+https://reinersuite.nrha.com/#/app/events/event-results/20300
+https://reinersuite.nrha.com/#/app/events/event-results/20241
+https://reinersuite.nrha.com/#/app/events/event-results/20232
+https://reinersuite.nrha.com/#/app/events/event-results/20229
+https://reinersuite.nrha.com/#/app/events/event-results/20247
+https://reinersuite.nrha.com/#/app/events/event-results/20228
+https://reinersuite.nrha.com/#/app/events/event-results/20222
+https://reinersuite.nrha.com/#/app/events/event-results/20217
+
+
+
+"""
