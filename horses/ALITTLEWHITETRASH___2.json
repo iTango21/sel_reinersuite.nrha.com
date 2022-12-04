@@ -1,0 +1,69 @@
+{
+    "id": 251327,
+    "active": true,
+    "deceased": false,
+    "gradeHorse": false,
+    "sireDamOffspring": false,
+    "horseName": "Alittlewhitetrash",
+    "horseFoalDate": "2015-02-15",
+    "horseDeceasedDate": null,
+    "horseSex": "G",
+    "horseSexDescription": "Gelding",
+    "horsePreviousName": null,
+    "horsePreviousNameDate": null,
+    "horseCompetitionLicenseNumber": 589960,
+    "horseCompetitionLicenseStatusDescription": "Approved",
+    "sireName": "Gunnatrashya",
+    "sireCompetitionLicenseNumber": 555825,
+    "damName": "Wimpy Little Girl",
+    "damCompetitionLicenseNumber": 565789,
+    "breederId": 2998,
+    "breederDisplayName": "Peter A Morgan",
+    "leaseId": null,
+    "leaseStatus": null,
+    "lesseeDisplayName": null,
+    "lesseeId": null,
+    "lesseeNumber": null,
+    "nominationYear": 2015,
+    "nominationProgram": "NA",
+    "nominationProgramDescription": "North American",
+    "nominatedByDisplayName": "Peter A Morgan",
+    "nominatedById": 2998,
+    "nominatedByNumber": 5985,
+    "nominationOption": null,
+    "nominationOptionYear": null,
+    "nominationOptionDescription": null,
+    "nominationOptionByDisplayName": null,
+    "nominationOptionById": null,
+    "nominationOptionByNumber": null,
+    "earningsLifetime": null,
+    "earningsCurrent": null,
+    "earningsPrevious": null,
+    "hasOwners": true,
+    "owners": [
+        {
+            "id": 123932,
+            "number": 82979,
+            "displayName": "CS Ranch Management SA"
+        }
+    ],
+    "ownersPending": [],
+    "ownersAdded": [],
+    "breeds": [
+        {
+            "registrationNumber": "1054883",
+            "registeredName": "Alittlewhitetrash",
+            "description": "AMERICAN PAINT HORSE ASSOC"
+        },
+        {
+            "registrationNumber": "5685517",
+            "registeredName": "Alittlewhitetrash",
+            "description": "AMERICAN QUARTER HORSE ASSOC"
+        }
+    ],
+    "userOwner": false,
+    "userLessee": false,
+    "userNominator": false,
+    "printDate": null,
+    "mailDate": null
+}
