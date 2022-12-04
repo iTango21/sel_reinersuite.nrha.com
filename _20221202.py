@@ -32,16 +32,24 @@ with requests.Session() as session:
 
     response = requests.post('https://data.nrha.com/api/app/rs/auth/login', headers=headers, data=data)
 
+    # print(response.json())
+    #
+    tok__ = json.loads(response.text)
+    tok_ = tok__['access']
+    # print(tok_)
+
     for u_ in url_list:
         cou_ += 1
 
         print(f'HORSE {cou_}/{horses_count}:  {u_}')
 
+        # 'authorization': f'{tok_}',
+
         headers = {
             'authority': 'data.nrha.com',
             'accept': 'application/json, text/plain, */*',
             'accept-language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,uk;q=0.6,vi;q=0.5,pt;q=0.4,ka;q=0.3',
-            'authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZGdvbGR0eEBnbWFpbC5jb20iLCJzY29wZXMiOlsiUk9MRV9NRU1CRVIiXSwidXNlciI6MTU5NzIsIm1lbWJlciI6NTA4NDEwLCJvcmciOjEsImlzcyI6Im5yaGEtZGF0YS10amN0cyIsImlhdCI6MTY3MDE0MjEzMiwiZXhwIjoxNjcwMTQzOTMyfQ.HZ7qy5GxJRZKFF-iCitN1CDhr5MLdWig_kkvRJyL6QpdLl7GaSxZlN0V8hIM9qPa8yZXwTHBnymgAUKHG1EdKw',
+            'authorization': f'Bearer {tok_}',
             'content-type': 'application/json',
             'origin': 'https://reinersuite.nrha.com',
             'referer': 'https://reinersuite.nrha.com/',
