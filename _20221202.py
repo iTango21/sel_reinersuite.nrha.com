@@ -88,7 +88,7 @@ with requests.Session() as session:
         aaa = json.loads(response.text)
         id_ = aaa[0]['id']
 
-        with open(f'{u_}___1.json', 'w', encoding='utf-8') as file:
+        with open(f'./horses/{u_}___1.json', 'w', encoding='utf-8') as file:
             json.dump(aaa, file, indent=4, ensure_ascii=False)
 
         params = {
@@ -102,5 +102,5 @@ with requests.Session() as session:
         response = requests.get(f'https://data.nrha.com/api/app/rs/horses/{id_}/info-panel', params=params, headers=headers)
         bbb = json.loads(response.text)
 
-        with open(f'{u_}___2.json', 'w', encoding='utf-8') as file:
+        with open(f'./horses/{u_}___2.json', 'w', encoding='utf-8') as file:
             json.dump(bbb, file, indent=4, ensure_ascii=False)
